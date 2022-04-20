@@ -13,16 +13,19 @@ import {
   ListItemIcon,
   Divider,
   Drawer,
+  Paper,
+  Stack,
+  ButtonBase,
   useMediaQuery,
   useTheme
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import BugReportRoundedIcon from '@mui/icons-material/BugReportRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 export function HeadBar() {
-    const [auth, setAuth] = React.useState(true);
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const [drawerState, setDrawerState] = React.useState(false);
 
     let theme = useTheme();
@@ -34,14 +37,6 @@ export function HeadBar() {
         setAuth(event.target.checked);
     };
     */
-  
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-  
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const toggleDrawer = (open) => (event) => {
       if ((event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) || mobile) {
@@ -58,18 +53,35 @@ export function HeadBar() {
         onKeyDown={toggleDrawer(false)}
       >
         <List>
+          <ListItem>
+            <Paper elevation={6} sx={{width: 1, height: '6ch', padding: '1ch', mb: '1ch'}}>
+              <Stack direction="row" justify="center" alignItems="center" sx={{width: '100%', height: 1}}>
+                <BugReportRoundedIcon color="primary" />
+                <Typography variant="h6" component="div" color="primary" sx={{ flexGrow: 1 }}>
+                  BugTracker
+                </Typography>
+              </Stack>
+            </Paper>
+          </ListItem>
+          <Divider />
           <ListItem button key='home' component={Link} to="/">
             <ListItemIcon>
-              <BugReportRoundedIcon />   
+              <HomeRoundedIcon />   
             </ListItemIcon>
             <ListItemText primary='Home' />
           </ListItem>
-          <Divider />
+          
           <ListItem button key='bugtrack' component={Link} to="bugtrack">
             <ListItemIcon>
               <BugReportRoundedIcon />  
             </ListItemIcon>
             <ListItemText primary='Bugtracker' />
+          </ListItem>
+          <ListItem button key='info' component={Link} to="/">
+            <ListItemIcon>
+              <InfoRoundedIcon />  
+            </ListItemIcon>
+            <ListItemText primary='Info' />
           </ListItem>
         </List>
         <Divider />
@@ -79,46 +91,13 @@ export function HeadBar() {
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar>
-            <IconButton onClick={toggleDrawer(true)} >
-              <BugReportRoundedIcon fontSize="large" />
-            </IconButton>
-                    
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              BugTracker
-            </Typography>
-            {auth && (
-              <div>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                  }}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>Account</MenuItem>
-                </Menu>
-              </div>
-            )}
+          <Toolbar>   
+            <ButtonBase onClick={toggleDrawer(true)} >
+              <BugReportRoundedIcon fontSize="large" color="primary" />
+              <Typography variant="h6" component="div" color="primary">
+                BugTracker
+              </Typography>
+            </ButtonBase>
           </Toolbar>
         </AppBar>
         <Drawer
