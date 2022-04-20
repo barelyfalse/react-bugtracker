@@ -89,7 +89,12 @@ export function HeadBar() {
     );
 
     return (
-      <Box sx={{ flexGrow: 1 }}>
+      <Box 
+        sx={{ 
+          flexGrow: 1,
+          boxShadow: '0px 1ch 2ch ' + theme.palette.primary.main + '30'
+        }}
+      >
         <AppBar position="static">
           <Toolbar>   
             <ButtonBase onClick={toggleDrawer(true)} >

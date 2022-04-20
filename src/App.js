@@ -18,7 +18,7 @@ import '@fontsource/roboto/700.css';
 
 
 function App() {
-  const darkTheme = createTheme({
+  const theme = createTheme({
     palette: {
       mode: 'dark',
       primary: {
@@ -42,10 +42,10 @@ function App() {
       tonalOffset: 0.2,
     },
   });
-  const mobile = useMediaQuery(darkTheme.breakpoints.down('sm'));
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <HeadBar />
         <Routes>
