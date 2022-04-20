@@ -20,7 +20,6 @@ import {
   useTheme
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import BugReportRoundedIcon from '@mui/icons-material/BugReportRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
@@ -31,20 +30,12 @@ export function HeadBar() {
     let theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    /*
-    User authorized state
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
-    */
-
     const toggleDrawer = (open) => (event) => {
       if ((event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) || mobile) {
         return;
       }
       setDrawerState(open);
     }
-
     const list = () => (
       <Box
         sx={{ width: 250}}
@@ -54,7 +45,16 @@ export function HeadBar() {
       >
         <List>
           <ListItem>
-            <Paper elevation={6} sx={{width: 1, height: '6ch', padding: '1ch', mb: '1ch'}}>
+            <Paper 
+              elevation={5}
+              sx={{
+                width: 1, 
+                height: '6ch', 
+                padding: '1ch', 
+                mb: '1ch', 
+                borderRadius: '1ch',
+              }}
+            >
               <Stack direction="row" justify="center" alignItems="center" sx={{width: '100%', height: 1}}>
                 <BugReportRoundedIcon color="primary" />
                 <Typography variant="h6" component="div" color="primary" sx={{ flexGrow: 1 }}>
@@ -93,8 +93,8 @@ export function HeadBar() {
         <AppBar position="static">
           <Toolbar>   
             <ButtonBase onClick={toggleDrawer(true)} >
-              <BugReportRoundedIcon fontSize="large" color="primary" />
-              <Typography variant="h6" component="div" color="primary">
+              <BugReportRoundedIcon fontSize="large" color={theme.palette.mode === 'dark' ? 'primary' : 'default'} />
+              <Typography variant="h6" component="div" color={theme.palette.mode === 'dark' ? 'primary' : 'default'}>
                 BugTracker
               </Typography>
             </ButtonBase>
