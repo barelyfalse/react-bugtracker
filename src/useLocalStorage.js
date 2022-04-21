@@ -33,9 +33,10 @@ export const useStoragedProject = (id, key, defaultValue) => {
     var initial = stored;
     return initial[key];
   });
-
+  
   useEffect(() => {
     //storing data
+    
     var stored = getStoredData(id, defaultValue);
     stored[key] = value;
     localStorage.setItem(id, JSON.stringify(stored));
@@ -50,6 +51,7 @@ export const storeNewProject = (name, id) => {
     open: [],
     inprogress: [],
     tobetested: [],
+    onhold: [],
     closed: []
   }
   localStorage.setItem(id, JSON.stringify(newProj));
@@ -62,7 +64,7 @@ export const getProjectData = (id) => {
 }
 
 export const setCurrentProject = (id) => {
-  localStorage.setItem('currentproject', JSON.stringify(id));
+  localStorage.setItem('currentproject', id);
 }
 
 export const getCurrentProject = () => {
@@ -71,6 +73,5 @@ export const getCurrentProject = () => {
     console.log('Project not found in storage!')
     return null;
   }
-  var initial = JSON.parse(saved);
-  return initial;
+  return saved;
 }

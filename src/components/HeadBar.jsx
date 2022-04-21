@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { 
+import {
+  useMediaQuery,
+  useTheme,
   AppBar,
   Box,
   Toolbar,
   Typography,
-  IconButton,
-  MenuItem,
-  Menu,
   List,
   ListItem,
   ListItemText,
@@ -16,15 +15,16 @@ import {
   Paper,
   Stack,
   ButtonBase,
-  useMediaQuery,
-  useTheme
+  Switch
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import BugReportRoundedIcon from '@mui/icons-material/BugReportRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 
-export function HeadBar() {
+export function HeadBar({onLights}) {
     const [drawerState, setDrawerState] = React.useState(false);
 
     let theme = useTheme();
@@ -36,11 +36,17 @@ export function HeadBar() {
       }
       setDrawerState(open);
     }
+
+    const [themeCheked, setThemeCheked] = React.useState(true);
+    const handleThemeCheck = () => {
+      setThemeCheked(!themeCheked);
+      onLights(themeCheked);
+    }
+
     const list = () => (
       <Box
         sx={{ width: 250}}
         role="presentation"
-        onClick={toggleDrawer(false)}
         onKeyDown={toggleDrawer(false)}
       >
         <List>
@@ -64,20 +70,20 @@ export function HeadBar() {
             </Paper>
           </ListItem>
           <Divider />
-          <ListItem button key='home' component={Link} to="/">
+          <ListItem button key='home' component={Link} to="/" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <HomeRoundedIcon />   
             </ListItemIcon>
             <ListItemText primary='Home' />
           </ListItem>
           
-          <ListItem button key='bugtrack' component={Link} to="bugtrack">
+          <ListItem button key='bugtrack' component={Link} to="bugtrack" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <BugReportRoundedIcon />  
             </ListItemIcon>
             <ListItemText primary='Bugtracker' />
           </ListItem>
-          <ListItem button key='info' component={Link} to="/">
+          <ListItem button key='info' component={Link} to="/" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <InfoRoundedIcon />  
             </ListItemIcon>
@@ -85,6 +91,16 @@ export function HeadBar() {
           </ListItem>
         </List>
         <Divider />
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{mt: '2ch'}}>
+          <LightModeRoundedIcon />
+          <Switch
+            checked={themeCheked}
+            onChange={handleThemeCheck}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          <DarkModeRoundedIcon />
+        </Stack>
+        
       </Box>
     );
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   CssBaseline,
   useMediaQuery
@@ -18,9 +18,17 @@ import '@fontsource/roboto/700.css';
 
 
 function App() {
+  const [lights, setLights] = useState('dark');
+  const switchTheme = (checked) => {
+    if(checked) {
+      setLights('light');
+    } else {
+      setLights('dark');
+    }
+  }
   const theme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: lights,
       primary: {
         // light: will be calculated from palette.primary.main,
         main: '#ff4400',
@@ -33,21 +41,20 @@ function App() {
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
       },
-      // Used by `getContrastText()` to maximize the contrast between
-      // the background and the text.
+      colorpro: {
+        main: '#452e63'
+      },
       contrastThreshold: 3,
-      // Used by the functions below to shift a color's luminance by approximately
-      // two indexes within its tonal palette.
-      // E.g., shift from Red 500 to Red 300 or Red 700.
       tonalOffset: 0.2,
     },
   });
+  
   const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <HeadBar />
+        <HeadBar onLights={switchTheme} />
         <Routes>
           <Route path="/" element={ <Home /> } />
           <Route path="bugtrack" element={ <Bugtrack /> }/>

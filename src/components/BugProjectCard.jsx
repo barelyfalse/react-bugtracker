@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { useNavigate  } from "react-router-dom";
-import { useLocalStorage, getProjectData } from '../useLocalStorage'
+import { Link, useNavigate  } from "react-router-dom";
+import { useLocalStorage, getProjectData, setCurrentProject } from '../useLocalStorage'
 import { 
   Box, 
   Typography,
@@ -11,18 +11,10 @@ import {
 } from '@mui/material';
 
 function BugProjectCard({id}) {
-  const nav = useNavigate();
   const project = getProjectData(id);
-  const [currentProject, setCurrentProject] = useLocalStorage('currentproject', '')
-
-  if(!project) {
-    console.log('Project "' + id + '" not found')
-    return <></>
-  }
 
   const onOpenProject = () => {
     setCurrentProject(id);
-    nav('bugtrack');
   }
 
   return (
@@ -34,6 +26,8 @@ function BugProjectCard({id}) {
         boxShadow: '0ch 1ch 1ch 1ch rgba(0, 0, 0, 0.3)'
       }}
       onClick={onOpenProject}
+      component={Link}
+      to="bugtrack"
     >
       <Paper 
         elevation={2}

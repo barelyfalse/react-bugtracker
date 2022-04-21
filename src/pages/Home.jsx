@@ -66,7 +66,8 @@ function Home() {
                 height: '250px',
                 
                 borderRadius: '2ch',
-                boxShadow: '0ch 1ch 1ch 1ch rgba(0, 0, 0, 0.3)'
+                boxShadow: '0ch 1ch 1ch 1ch rgba(0, 0, 0, 0.3)',
+                opacity: .6
               }}
               onClick={handleNewProjectDialogClickOpen}
             >
@@ -88,7 +89,7 @@ function Home() {
                     alignItems: 'center'
                   }}
                 >
-                  <AddRoundedIcon fontSize="large"/>
+                  <AddRoundedIcon fontSize="large" />
                 </Box>
               </Paper>
             </ButtonBase>
