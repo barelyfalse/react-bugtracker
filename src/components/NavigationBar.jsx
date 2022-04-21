@@ -4,14 +4,15 @@ import {
   BottomNavigationAction,
   Paper
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import BugReportRoundedIcon from '@mui/icons-material/BugReportRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 function NavigationBar() {
-  const [selectedDir, setSelectedDir] = React.useState('recents');
-
+  const curDir = useLocation().pathname;
+  console.log(curDir)
+  const [selectedDir, setSelectedDir] = React.useState(curDir);
   const handleDirChange = (event, newValue) => {
     setSelectedDir(newValue);
   };
@@ -23,7 +24,7 @@ function NavigationBar() {
             component={Link}
             to="/"
             label="Home"
-            value="home"
+            value="/"
             icon={<HomeRoundedIcon />}
           >
           </BottomNavigationAction>
@@ -31,12 +32,12 @@ function NavigationBar() {
           component={Link}
           to="bugtrack"
           label="Bugs"
-          value="bugs"
+          value="/bugtrack"
           icon={<BugReportRoundedIcon />}
         />
         <BottomNavigationAction
           label="Info"
-          value="info"
+          value="/info"
           icon={<InfoRoundedIcon />}
         />
       </BottomNavigation>

@@ -28,7 +28,7 @@ function App() {
   }
   const theme = createTheme({
     palette: {
-      mode: lights,
+      mode: 'light',
       primary: {
         // light: will be calculated from palette.primary.main,
         main: '#ff4400',
@@ -44,6 +44,52 @@ function App() {
       colorpro: {
         main: '#452e63'
       },
+      state: {
+        open: '#2e8ae6',
+        inprogress: '#65e0a1',
+        tobetested: '#9465e0',
+        onhold: '#ea7d1c',
+      },
+      severity: {
+        critical: '#cf2929',
+        normal: '#de853c',
+        trivial: '#49de3c',
+        upgrade: '#3cc6de',
+      },
+      bugcolumn: {
+        main: '#ff4400'
+      },
+      contrastThreshold: 3,
+      tonalOffset: 0.2,
+    },
+  });
+
+  const darktheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#ff4400',
+      },
+      secondary: {
+        light: '#0066ff',
+        main: '#00ff5e',
+        contrastText: '#ffcc00',
+      },
+      state: {
+        open: '#2e8ae6',
+        inprogress: '#65e0a1',
+        tobetested: '#9465e0',
+        onhold: '#ea7d1c',
+      },
+      severity: {
+        critical: '#cf2929',
+        normal: '#de853c',
+        trivial: '#49de3c',
+        upgrade: '#3cc6de',
+      },
+      bugcolumn: {
+        main: '#1d1d1d'
+      },
       contrastThreshold: 3,
       tonalOffset: 0.2,
     },
@@ -52,7 +98,7 @@ function App() {
   const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={lights === 'light' ? theme : darktheme}>
         <CssBaseline />
         <HeadBar onLights={switchTheme} />
         <Routes>
