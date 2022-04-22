@@ -51,9 +51,9 @@ function App() {
         onhold: '#ea7d1c',
       },
       severity: {
-        critical: '#cf2929',
+        critical: '#ff4242',
         normal: '#de853c',
-        trivial: '#49de3c',
+        trivial: '#c3eb7a',
         upgrade: '#3cc6de',
       },
       bugcolumn: {
@@ -82,9 +82,9 @@ function App() {
         onhold: '#ea7d1c',
       },
       severity: {
-        critical: '#cf2929',
+        critical: '#ff4242',
         normal: '#de853c',
-        trivial: '#49de3c',
+        trivial: '#c3eb7a',
         upgrade: '#3cc6de',
       },
       bugcolumn: {

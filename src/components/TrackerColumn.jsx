@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types';
 import {
   useMediaQuery,
@@ -11,16 +11,14 @@ import {
   BaseButton,
   ButtonIcon,
   Grid,
-  Typography
+  Typography,
+  Grow
 } from '@mui/material';
 import BugCard from '../components/BugCard';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-function capitalize(str) {
-  const low = str.toLowerCase();
-  return str.charAt(0).toUpperCase() + low.slice(1);
-}
 
-function TrackerColumn({type, bgcolor, accent}) {
+function TrackerColumn({type, title, bgcolor, accent, bugs}) {
   const darkmode = useTheme().palette.mode === 'dark';
   const mobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
@@ -46,9 +44,21 @@ function TrackerColumn({type, bgcolor, accent}) {
           }}
         >
           <Stack sx={{mb: '2ch'}}>
-            <Typography variant="h6">{capitalize(type)}</Typography>
+            <Typography variant="h6">{title}</Typography>
           </Stack>
           <Stack direction="column" spacing={2}>
+            
+              { 
+                bugs ?
+                bugs.map((bug, index) => {
+                  return (
+                    <Box key={index} >
+                      <BugCard bug={bug}/>
+                    </Box>
+                  )
+                }) : <></>
+              }
+            
           </Stack>
         </Box>
       </Paper>
@@ -58,6 +68,9 @@ function TrackerColumn({type, bgcolor, accent}) {
 
 TrackerColumn.propTypes = {
   type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  bgcolor: PropTypes.string.isRequired,
+  accent: PropTypes.string.isRequired,
 }
 
 export default TrackerColumn

@@ -6,31 +6,37 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 
-const actions = [
-  { icon: <AddRoundedIcon />, name: 'Add' },
-  { icon: <FileDownloadRoundedIcon />, name: 'Download' },
-];
 
-function BugTrackerDial({onMobile}) {
+
+function BugTrackerDial({onMobile, newBug}) {
+  const actions = [
+    { icon: <AddRoundedIcon />, name: 'Add', action: newBug  },
+    { icon: <FileDownloadRoundedIcon />, name: 'Download'},
+  ];
+
   return (
     <SpeedDial
-      ariaLabel="SpeedDial basic example"
+      ariaLabel="SpeedDial"
       sx={{ position: 'fixed', bottom: (onMobile ? 70 : 16), right: 16 }}
       icon={<SpeedDialIcon />}
     >
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-        />
-      ))}
+      {actions.map((action) => {
+        return (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={action.action}
+          />
+        )
+      })}
     </SpeedDial>
   );
 }
 
 BugTrackerDial.propTypes = {
   onMobile: PropTypes.bool.isRequired,
+  newBug: PropTypes.func.isRequired,
 }
 
 export default BugTrackerDial;
