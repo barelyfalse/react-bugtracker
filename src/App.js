@@ -31,7 +31,7 @@ function App() {
       mode: 'light',
       primary: {
         // light: will be calculated from palette.primary.main,
-        main: '#ff4400',
+        main: '#4800ff',
         // dark: will be calculated from palette.primary.main,
         // contrastText: will be calculated to contrast with palette.primary.main
       },
@@ -40,9 +40,6 @@ function App() {
         main: '#00ff5e',
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
-      },
-      colorpro: {
-        main: '#452e63'
       },
       state: {
         open: '#2e8ae6',
@@ -53,11 +50,11 @@ function App() {
       severity: {
         critical: '#ff4242',
         normal: '#de853c',
-        trivial: '#c3eb7a',
+        trivial: '#a0df81',
         upgrade: '#3cc6de',
       },
       bugcolumn: {
-        main: '#ff4400'
+        main: '#e4e2e9'
       },
       contrastThreshold: 3,
       tonalOffset: 0.2,
@@ -68,7 +65,7 @@ function App() {
     palette: {
       mode: 'dark',
       primary: {
-        main: '#ff4400',
+        main: '#8c5eff',
       },
       secondary: {
         light: '#0066ff',
@@ -84,7 +81,7 @@ function App() {
       severity: {
         critical: '#ff4242',
         normal: '#de853c',
-        trivial: '#c3eb7a',
+        trivial: '#a1e963',
         upgrade: '#3cc6de',
       },
       bugcolumn: {
