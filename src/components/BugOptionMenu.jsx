@@ -17,9 +17,7 @@ function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
     onClose();
   }
   const handleMoveClick = (des) => {
-    if(des === 'open') {
-      handleMove('open')
-    }
+    handleMove(des)
     onClose();
   }
 
@@ -57,7 +55,7 @@ function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
         <MenuItem onClick={handleMoveClick}>
           <ListItemText>Para ser probado</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleMoveClick}>
+        <MenuItem onClick={() => handleMoveClick('onhold')}>
           <ListItemText>En espera</ListItemText>
         </MenuItem>
         <Divider />

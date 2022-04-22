@@ -17,7 +17,8 @@ function Bugtrack() {
   const curProj = getCurrentProject();
   const [projectName, setProjectName] = useStoragedProject(curProj, 'name', '');
   const [onHoldBugs, setOnHoldBugs] = useStoragedProject(curProj, 'onhold', []);
-  const [openBugs, setOpenBugs] = useStoragedProject(curProj, 'open', [])
+  const [openBugs, setOpenBugs] = useStoragedProject(curProj, 'open', []);
+  const [onProgressBugs, setOnProgressBugs] = useStoragedProject(curProj, 'onprogress', []);
 
   const palette = useTheme().palette;
   const onMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
@@ -41,6 +42,14 @@ function Bugtrack() {
       let bugToMove = {};
       console.log('triying to move ' + bugId + ' from ' + source + ' to ' + destination);
       switch(source) {
+        case 'open':
+          setOpenBugs(prevBugs => {
+            const bugIndex = prevBugs.findIndex(bug => bug.id === bugId);
+            let newBugs = [...prevBugs];
+            bugToMove = newBugs.splice(bugIndex, 1)[0];
+            return newBugs;
+          });
+          break;
         case 'onhold':
           setOnHoldBugs(prevBugs => {
             const bugIndex = prevBugs.findIndex(bug => bug.id === bugId);
@@ -48,6 +57,9 @@ function Bugtrack() {
             bugToMove = newBugs.splice(bugIndex, 1)[0];
             return newBugs;
           });
+          break;
+        default:
+          console.log('Error removing bug, unknown source');
           break;
       }
       placeBug(bugToMove, destination);
@@ -75,7 +87,8 @@ function Bugtrack() {
         })
         break;
       default:
-        console.log('error placing bug, wrong destination')
+        console.log('Error placing bug, unknow destination');
+        break;
     }
   }
 

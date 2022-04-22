@@ -1,6 +1,6 @@
 /*matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())*/
 .fade-appear {
-  transform: matrix(1.5, 0, 0, .8, 0, 0);
+  transform: matrix(1.5, 0, 0, .5, 0, 0);
   filter: blur(4px);
   opacity: 0;
   z-index: 1;
@@ -11,7 +11,7 @@
   filter: blur(0px);
   opacity: 1;
   transition-timing-function: ease-in-out;
-  transition: opacity 500ms, filter 300ms, transform 300ms;
+  transition: opacity 1000ms, filter 1000ms, transform 1000ms;
 }
 
 .fade-enter {
