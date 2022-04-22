@@ -38,7 +38,7 @@ function Bugtrack() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{mt: '2ch'}}>
+    <Container maxWidth="xl" sx={{mt: '2ch', overflow: 'hidden', pb: '10ch'}}>
       
       <Stack
         direction="row"
