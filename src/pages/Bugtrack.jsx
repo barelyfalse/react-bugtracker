@@ -49,23 +49,23 @@ function Bugtrack() {
         <TrackerColumn 
           type="open" 
           title="Abierto" 
-          bgcolor={palette.bugcolumn.main + '07'} 
+          bgcolor={palette.bugcolumn.main} 
           accent={palette.state.open}
         />
         <TrackerColumn 
           type="inprogress" 
           title="En progreso" 
-          bgcolor={palette.bugcolumn.main + '07'} 
+          bgcolor={palette.bugcolumn.main} 
           accent={palette.state.inprogress}/>
         <TrackerColumn 
           type="tobetested" 
           title="Para ser probado" 
-          bgcolor={palette.bugcolumn.main + '07'} 
+          bgcolor={palette.bugcolumn.main} 
           accent={palette.state.tobetested}/>
         <TrackerColumn 
           type="onhold" 
           title="En espera" 
-          bgcolor={palette.bugcolumn.main + '07'} 
+          bgcolor={palette.bugcolumn.main} 
           accent={palette.state.onhold}
           bugs={onHoldBugs}/>
       </Grid>
