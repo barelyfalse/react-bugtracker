@@ -16,7 +16,8 @@ import NewBugDialog from '../components/NewBugDialog';
 function Bugtrack() {
   const curProj = getCurrentProject();
   const [projectName, setProjectName] = useStoragedProject(curProj, 'name', '');
-  const [onHoldBugs, setOnHoldBugs] = useStoragedProject(curProj, 'onhold', [])
+  const [onHoldBugs, setOnHoldBugs] = useStoragedProject(curProj, 'onhold', []);
+  const [openBugs, setOpenBugs] = useStoragedProject(curProj, 'open', [])
 
   const palette = useTheme().palette;
   const onMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
@@ -29,12 +30,53 @@ function Bugtrack() {
 
   const handleNewBugClose = (newBug) => {
     if(newBug) {
-      setOnHoldBugs(prevBugs => {
-        let newBugs = [...prevBugs, newBug];
-        return newBugs;
-      })
+      placeBug(newBug, 'onhold');
     }
     setNewBugDiagOpen(false);
+  }
+
+  //move bug 
+  const handleBugMove = (bugId, source, destination) => {
+    if(bugId && source && destination) {
+      let bugToMove = {};
+      console.log('triying to move ' + bugId + ' from ' + source + ' to ' + destination);
+      switch(source) {
+        case 'onhold':
+          setOnHoldBugs(prevBugs => {
+            const bugIndex = prevBugs.findIndex(bug => bug.id === bugId);
+            let newBugs = [...prevBugs];
+            bugToMove = newBugs.splice(bugIndex, 1)[0];
+            return newBugs;
+          });
+          break;
+      }
+      placeBug(bugToMove, destination);
+    }
+  }
+
+  const placeBug = (bug, destination) => {
+    switch(destination) {
+      case 'open':
+        setOpenBugs(prevBugs => {
+          if(!prevBugs) {
+            prevBugs = []
+          }
+          let newBugs = [...prevBugs, bug];
+          return newBugs;
+        })
+        break;
+      case 'onhold':
+        setOnHoldBugs(prevBugs => {
+          if(!prevBugs) {
+            prevBugs = []
+          }
+          let newBugs = [...prevBugs, bug];
+          return newBugs;
+        })
+        break;
+      default:
+        console.log('error placing bug, wrong destination')
+    }
   }
 
   return (
@@ -51,23 +93,27 @@ function Bugtrack() {
           title="Abierto" 
           bgcolor={palette.bugcolumn.main} 
           accent={palette.state.open}
-        />
+          bugs={openBugs}
+          handleBugMove={handleBugMove}/>
         <TrackerColumn 
           type="inprogress" 
           title="En progreso" 
           bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.inprogress}/>
+          accent={palette.state.inprogress}
+          handleBugMove={handleBugMove}/>
         <TrackerColumn 
           type="tobetested" 
           title="Para ser probado" 
           bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.tobetested}/>
+          accent={palette.state.tobetested}
+          handleBugMove={handleBugMove}/>
         <TrackerColumn 
           type="onhold" 
           title="En espera" 
           bgcolor={palette.bugcolumn.main} 
           accent={palette.state.onhold}
-          bugs={onHoldBugs}/>
+          bugs={onHoldBugs}
+          handleBugMove={handleBugMove}/>
       </Grid>
       <BugTrackerDial 
         onMobile={onMobile} 

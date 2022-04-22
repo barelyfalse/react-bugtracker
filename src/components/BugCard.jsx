@@ -16,7 +16,7 @@ import BugOptionMenu from './BugOptionMenu'
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import '../css/bugcard.css'
 
-function BugCard({bug}) {
+function BugCard({bug, type, handleBugMove}) {
   const nodeRef = useRef(null);
   const sevColors = useTheme().palette.severity;
   let severityColor;
@@ -29,7 +29,7 @@ function BugCard({bug}) {
 
   const date = new Date(bug.date);
 
-//optionmenu controllers
+  //optionmenu controllers
   const [menuAnchorEl, setMenuAnchorEl] = React.useState(null);
   const openMenu = Boolean(menuAnchorEl);
   const handleMenuClick = (event) => {
@@ -39,41 +39,45 @@ function BugCard({bug}) {
     setMenuAnchorEl(null);
   };
 
+  //bug move controllers
+  const handleMove = (destination) => {
+    handleBugMove(bug.id, type, destination);
+  }
+
   return (
     <Box>
-    <CSSTransition
-      nodeRef={nodeRef}
-      in={true}
-      appear={true}
-      timeout={300}
-      classNames="fade"
-    >
-      <Paper
-        ref={nodeRef}
-        sx={{
-          borderRadius: '1ch',
-          p: '.5ch',
-          boxShadow: '0',
-          boxShadow: '0ch .5ch 1ch .2ch' + severityColor + '25',
-          height: '14ch'
-        }}
+      <CSSTransition
+        nodeRef={nodeRef}
+        in={true}
+        appear={true}
+        timeout={1000}
+        classNames="fade"
       >
-        <Stack direction="row" sx={{}}>
-          <Box 
-            sx={{ 
-              backgroundColor: severityColor, 
-              width: '6px', 
-              height: '12ch',
-              borderRadius: '1ch',
-              m: '.5ch',
-            }}
-          />
-          <Box sx={{ml:'1ch', width: '1', height: '100%'}}>
-            <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
-              <Stack direction="row" alignItems="center" justifyContent="space-between">
-                <Typography fontWeight="bold">{bug.name}</Typography>
-                <Box>
-                  <Tooltip title="Menú" arrow>
+        <Paper
+          ref={nodeRef}
+          sx={{
+            borderRadius: '1ch',
+            p: '.5ch',
+            boxShadow: '0',
+            boxShadow: '0ch .5ch 1ch .2ch' + severityColor + '25',
+            height: '14ch'
+          }}
+        >
+          <Stack direction="row" sx={{}}>
+            <Box 
+              sx={{ 
+                backgroundColor: severityColor, 
+                width: '6px', 
+                height: '12ch',
+                borderRadius: '1ch',
+                m: '.5ch',
+              }}
+            />
+            <Box sx={{ml:'1ch', width: '1', height: '100%'}}>
+              <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Typography fontWeight="bold">{bug.name}</Typography>
+                  <Box>
                     <IconButton 
                       aria-label="menu" 
                       size="small"
@@ -85,40 +89,42 @@ function BugCard({bug}) {
                     >
                       <MoreVertRoundedIcon sx={{opacity: '.4'}}/>
                     </IconButton>
-                  </Tooltip>
+                  </Box>
+                </Stack>
+                <Box 
+                  sx={{overflow: "hidden", 
+                    textOverflow: "ellipsis", 
+                    opacity: '.6',
+                  }}
+                >
+                  <Typography nowrap="true">{bug.description}</Typography>
                 </Box>
+                
+                <Stack direction="row" justifyContent="end" sx={{mr: '1ch', opacity: '.4'}}>
+                  <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
+                    <Typography variant="caption">{date.toLocaleDateString("es-US")}</Typography>
+                  </Tooltip>
+                </Stack>
               </Stack>
-              <Box 
-                sx={{overflow: "hidden", 
-                  textOverflow: "ellipsis", 
-                  opacity: '.6',
-                }}
-              >
-                <Typography nowrap="true">{bug.description}</Typography>
-              </Box>
-              
-              <Stack direction="row" justifyContent="end" sx={{mr: '1ch', opacity: '.4'}}>
-                <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
-                  <Typography variant="caption">{date.toLocaleDateString("es-US")}</Typography>
-                </Tooltip>
-              </Stack>
-            </Stack>
-          </Box>
-        </Stack>
-        
-      </Paper>
-    </CSSTransition>
-    <BugOptionMenu 
-          anchorEl={menuAnchorEl}
-          open={openMenu}
-          onClose={handleMenuClose}
-        />
+            </Box>
+          </Stack>
+        </Paper>
+      </CSSTransition>
+      <BugOptionMenu 
+        anchorEl={menuAnchorEl}
+        open={openMenu}
+        onClose={handleMenuClose}
+        bugType={type}
+        handleMove={handleMove}
+      />
     </Box>
   )
 }
 
 BugCard.propTypes = {
   bug: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  handleBugMove: PropTypes.func.isRequired,
 }
 
 export default BugCard

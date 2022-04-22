@@ -8,19 +8,18 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-function BugOptionMenu({anchorEl, open, onClose}) {
+function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
   const handleEditClick = () => {
     onClose();
   }
   const handleMoveClick = (des) => {
+    if(des === 'open') {
+      handleMove('open')
+    }
     onClose();
   }
 
@@ -49,7 +48,7 @@ function BugOptionMenu({anchorEl, open, onClose}) {
             <ArrowForwardRoundedIcon fontSize="small" />
           </ListItemIcon>
         </MenuItem>
-        <MenuItem onClick={handleMoveClick}>
+        <MenuItem onClick={() => handleMoveClick('open')}>
           <ListItemText>Abierto</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleMoveClick}>
@@ -61,6 +60,13 @@ function BugOptionMenu({anchorEl, open, onClose}) {
         <MenuItem onClick={handleMoveClick}>
           <ListItemText>En espera</ListItemText>
         </MenuItem>
+        <Divider />
+        <MenuItem onClick={handleEditClick}>
+          <ListItemIcon>
+            <DeleteForeverRoundedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Eliminar</ListItemText>
+        </MenuItem>
       </MenuList>
       </Menu>
     </Paper>
@@ -70,6 +76,8 @@ function BugOptionMenu({anchorEl, open, onClose}) {
 BugOptionMenu.propTypes = {
   open: PropTypes.bool.isRequired, 
   onClose: PropTypes.func.isRequired,
-}
+  bugType: PropTypes.string.isRequired,
+  handleMove: PropTypes.func.isRequired,
+} 
 
 export default BugOptionMenu

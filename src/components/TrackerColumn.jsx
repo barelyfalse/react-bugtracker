@@ -18,7 +18,7 @@ import BugCard from '../components/BugCard';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
-function TrackerColumn({type, title, bgcolor, accent, bugs}) {
+function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove}) {
   const darkmode = useTheme().palette.mode === 'dark';
   const mobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
@@ -53,7 +53,7 @@ function TrackerColumn({type, title, bgcolor, accent, bugs}) {
                 bugs.map((bug, index) => {
                   return (
                     <Box key={index} >
-                      <BugCard bug={bug}/>
+                      <BugCard bug={bug} type={type} handleBugMove={handleBugMove}/>
                     </Box>
                   )
                 }) : <></>
@@ -71,6 +71,7 @@ TrackerColumn.propTypes = {
   title: PropTypes.string.isRequired,
   bgcolor: PropTypes.string.isRequired,
   accent: PropTypes.string.isRequired,
+  handleBugMove: PropTypes.func.isRequired,
 }
 
 export default TrackerColumn
