@@ -75,31 +75,34 @@ function BugCard({bug, type, handleBugMove}) {
             />
             <Box sx={{ml:'1ch', width: '1', height: '100%'}}>
               <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Typography fontWeight="bold">{bug.name}</Typography>
-                  <Box>
-                    <IconButton 
-                      aria-label="menu" 
-                      size="small"
-                      id="menu-button"
-                      aria-controls={openMenu ? 'basic-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={openMenu ? 'true' : undefined}
-                      onClick={handleMenuClick}
-                    >
-                      <MoreVertRoundedIcon sx={{opacity: '.4'}}/>
-                    </IconButton>
-                  </Box>
-                </Stack>
-                <Box 
+                <Box
                   sx={{overflow: "hidden", 
                     textOverflow: "ellipsis", 
-                    opacity: '.6',
+                    
                   }}
                 >
-                  <Typography nowrap="true">{bug.description}</Typography>
+                  <Stack direction="row" alignItems="center" justifyContent="space-between">
+                    <Typography fontWeight="bold">{bug.name}</Typography>
+                    <Box>
+                      <IconButton 
+                        aria-label="menu" 
+                        size="small"
+                        id="menu-button"
+                        aria-controls={openMenu ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openMenu ? 'true' : undefined}
+                        onClick={handleMenuClick}
+                      >
+                        <MoreVertRoundedIcon sx={{opacity: '.4'}}/>
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                  <Box 
+                    sx={{opacity: '.6'}}
+                  >
+                    <Typography nowrap="true">{bug.description}</Typography>
+                  </Box>
                 </Box>
-                
                 <Stack direction="row" justifyContent="end" sx={{mr: '1ch', opacity: '.4'}}>
                   <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
                     <Typography variant="caption">{date.toLocaleDateString("es-US")}</Typography>
