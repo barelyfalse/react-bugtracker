@@ -29,7 +29,6 @@ function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove}) {
         sx={{ 
           mt: '1ch',
           width: mobile ? '100%' : '100%', 
-          height: '100%',
           minHeight: '10ch',
           borderRadius: '1.5ch',
           borderTopRightRadius: '1ch',
@@ -47,7 +46,7 @@ function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove}) {
             <Typography variant="h6">{title}</Typography>
           </Stack>
           <TransitionGroup
-            style={{display: 'flex', flexDirection: 'column', gap: '10px'}}
+            style={{display: 'flex', flexDirection: 'column'}}
           >
             { 
               bugs ?

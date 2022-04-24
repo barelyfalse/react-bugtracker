@@ -1,7 +1,7 @@
 /*matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())*/
 .fade-appear {
-  opacity: 0;
   z-index: 1;
+  opacity: 0;
 }
 .fade-appear.fade-appear-active {
   opacity: 1;
@@ -13,40 +13,66 @@
 
 
 .fade-enter {
-  transform: matrix(1.5, 0, 0, .5, 0, 0);
-  filter: blur(4px);
-  opacity: 0;
   z-index: 1;
+  opacity: 0;
+  filter: blur(5px);
+  transform: scaleX(1.5) scaleY(.5);
 }
 .fade-enter.fade-enter-active {
-  
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  filter: blur(0px);
   opacity: 1;
+  filter: blur(0px);
+  transform: scaleX(1) scaleY(1);
   transition-timing-function: cubic-bezier(.04,.95,.2,.98);
   transition: 200ms all;
 }
 .fade-enter-done {
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  filter: blur(0px);
   opacity: 1;
+  filter: blur(0px);
+  transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
 
 .fade-exit {
+  z-index: 1;
   opacity: 1;
+  height: 12ch;
   filter: blur(0px);
   transform: scale(1) rotate(0);
 }
 .fade-exit.fade-exit-active {
-  transform: scale(.9) rotate(-8deg);
   opacity: 0;
-  filter: blur(4px);
+  height: 0ch;
+  filter: blur(5px);
+  transform: scale(.9) rotate(-8deg);
   transition-timing-function: cubic-bezier(.04,.95,.2,.98);
   transition: 300ms all;
 }
 .fade-exit-done {
   opacity: 0;
-  filter: blur(4px);
+  height: 0ch;
+  filter: blur(5px);
+  transform: scale(.9) rotate(-8deg);
+}
+
+
+.delete-exit {
+  z-index: 1;
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale(1) rotate(0);
+  height: 12ch;
+}
+.delete-exit.delete-exit-active {
+  transform: scale(.9) rotate(-8deg);
+  opacity: 0;
+  filter: blur(5px);
+  transition-timing-function: cubic-bezier(.04,.95,.2,.98);
+  height: 0ch;
+  transition: 300ms all;
+}
+.delete-exit-done {
+  opacity: 0;
+  height: 0ch;
+  filter: blur(5px);
   transform: scale(.9) rotate(-8deg);
 }
