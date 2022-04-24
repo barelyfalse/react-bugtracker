@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, } from 'react'
 import PropTypes from 'prop-types';
 import {
   useTheme, 
@@ -10,14 +10,15 @@ import {
   Typography,
   Tooltip
 } from '@mui/material';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import BugOptionMenu from './BugOptionMenu'
+import {v4 as uuid} from 'uuid'
 
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import '../css/bugcard.css'
 
 function BugCard({bug, type, handleBugMove}) {
-  const nodeRef = useRef(null);
+ 
   const sevColors = useTheme().palette.severity;
   let severityColor;
   switch (bug.severity) {
@@ -44,17 +45,12 @@ function BugCard({bug, type, handleBugMove}) {
     handleBugMove(bug.id, type, destination);
   }
 
+
   return (
+    
     <Box>
-      <CSSTransition
-        nodeRef={nodeRef}
-        in={true}
-        appear={true}
-        timeout={1000}
-        classNames="fade"
-      >
+      
         <Paper
-          ref={nodeRef}
           sx={{
             borderRadius: '1ch',
             p: '.5ch',
@@ -112,7 +108,7 @@ function BugCard({bug, type, handleBugMove}) {
             </Box>
           </Stack>
         </Paper>
-      </CSSTransition>
+      
       <BugOptionMenu 
         anchorEl={menuAnchorEl}
         open={openMenu}

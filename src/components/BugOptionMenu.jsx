@@ -39,32 +39,58 @@ function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
           </ListItemIcon>
           <ListItemText>Editar</ListItemText>
         </MenuItem>
-        <Divider />
-        <MenuItem disabled>
-          <ListItemText><i>Mover a</i></ListItemText>
-          <ListItemIcon>
-            <ArrowForwardRoundedIcon fontSize="small" />
-          </ListItemIcon>
-        </MenuItem>
-        <MenuItem onClick={() => handleMoveClick('open')}>
-          <ListItemText>Abierto</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleMoveClick}>
-          <ListItemText>En progreso</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleMoveClick}>
-          <ListItemText>Para ser probado</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => handleMoveClick('onhold')}>
-          <ListItemText>En espera</ListItemText>
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleEditClick}>
-          <ListItemIcon>
-            <DeleteForeverRoundedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Eliminar</ListItemText>
-        </MenuItem>
+        {bugType === 'onhold' || bugType === 'open' || bugType === 'onprogress' ? <Divider /> : null}
+        {
+          bugType === 'onhold' || bugType === 'open' || bugType === 'onprogress' ?
+          <MenuItem disabled>
+            <ListItemText><i>Mover a</i></ListItemText>
+            <ListItemIcon>
+              <ArrowForwardRoundedIcon fontSize="small" />
+            </ListItemIcon>
+          </MenuItem> :
+          null
+        }
+        
+        {
+          bugType === 'onhold' ?
+          <MenuItem onClick={() => handleMoveClick('open')}>
+            <ListItemText>Abierto</ListItemText>
+          </MenuItem> :
+          null
+        }
+        {
+          bugType === 'open' ?
+          <MenuItem onClick={() => handleMoveClick('onprogress')}>
+            <ListItemText>En progreso</ListItemText>
+          </MenuItem> :
+          null
+        }
+        {
+          bugType === 'onprogress' ?
+          <MenuItem onClick={() => handleMoveClick('tobetested')}>
+            <ListItemText>Para ser probado</ListItemText>
+          </MenuItem> :
+          null
+        }
+        {
+          bugType === 'onprogress' ?
+          <MenuItem onClick={() => handleMoveClick('onhold')}>
+            <ListItemText>En espera</ListItemText>
+          </MenuItem> :
+          null
+        }
+        {bugType === 'onhold' ? <Divider /> : null}
+        {
+          bugType === 'onhold' ? 
+          <MenuItem onClick={handleEditClick}>
+            <ListItemIcon>
+              <DeleteForeverRoundedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Eliminar</ListItemText>
+          </MenuItem> :
+          null
+        }
+        
       </MenuList>
       </Menu>
     </Paper>

@@ -1,35 +1,52 @@
 /*matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())*/
 .fade-appear {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-out;
+}
+.fade-appear-done {
+  opacity: 1;
+}
+
+
+.fade-enter {
   transform: matrix(1.5, 0, 0, .5, 0, 0);
   filter: blur(4px);
   opacity: 0;
   z-index: 1;
 }
-
-.fade-appear.fade-appear-active {
+.fade-enter.fade-enter-active {
+  
   transform: matrix(1, 0, 0, 1, 0, 0);
   filter: blur(0px);
   opacity: 1;
-  transition-timing-function: ease-in-out;
-  transition: opacity 1000ms, filter 1000ms, transform 1000ms;
+  transition-timing-function: cubic-bezier(.04,.95,.2,.98);
+  transition: 200ms all;
+}
+.fade-enter-done {
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  filter: blur(0px);
+  opacity: 1;
 }
 
-.fade-enter {
-  opacity: 0;
-  z-index: 1;
-}
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 600ms linear;
-}
 
 .fade-exit {
   opacity: 1;
+  filter: blur(0px);
+  transform: scale(1) rotate(0);
 }
 .fade-exit.fade-exit-active {
+  transform: scale(.9) rotate(-8deg);
   opacity: 0;
-  transition: opacity 600ms linear;
+  filter: blur(4px);
+  transition-timing-function: cubic-bezier(.04,.95,.2,.98);
+  transition: 300ms all;
 }
 .fade-exit-done {
   opacity: 0;
+  filter: blur(4px);
+  transform: scale(.9) rotate(-8deg);
 }
