@@ -1,4 +1,4 @@
-import React, { useRef, useState, } from 'react'
+import React, { useState, useRef, createRef } from 'react'
 import PropTypes from 'prop-types';
 import {
   useTheme, 
@@ -10,15 +10,12 @@ import {
   Typography,
   Tooltip
 } from '@mui/material';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import BugOptionMenu from './BugOptionMenu'
-import {v4 as uuid} from 'uuid'
 
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import '../css/bugcard.css'
 
-function BugCard({bug, type, handleBugMove}) {
- 
+function BugCard({bug, type, handleBugMove, handleBugDelete}) {
   const sevColors = useTheme().palette.severity;
   let severityColor;
   switch (bug.severity) {
@@ -45,10 +42,14 @@ function BugCard({bug, type, handleBugMove}) {
     handleBugMove(bug.id, type, destination);
   }
 
+  //bug delete
+  const handleDelete = () => {
+    handleBugDelete(bug.id, type);
+  }
+
 
   return (
-    
-    <Box sx={{mt: '1ch'}}>
+    <>
       <Paper
         sx={{
           borderRadius: '1ch',
@@ -107,15 +108,15 @@ function BugCard({bug, type, handleBugMove}) {
           </Box>
         </Stack>
       </Paper>
-      
       <BugOptionMenu 
         anchorEl={menuAnchorEl}
         open={openMenu}
         onClose={handleMenuClose}
         bugType={type}
         handleMove={handleMove}
+        handleDelete={handleDelete}
       />
-    </Box>
+    </>
   )
 }
 
@@ -123,6 +124,7 @@ BugCard.propTypes = {
   bug: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   handleBugMove: PropTypes.func.isRequired,
+  handleBugDelete: PropTypes.func.isRequired
 }
 
 export default BugCard

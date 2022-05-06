@@ -12,12 +12,16 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
+function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove, handleDelete}) {
   const handleEditClick = () => {
     onClose();
   }
   const handleMoveClick = (des) => {
     handleMove(des)
+    onClose();
+  }
+  const handleDeleteClick = () => {
+    handleDelete();
     onClose();
   }
 
@@ -81,8 +85,8 @@ function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove}) {
         }
         {bugType === 'onhold' ? <Divider /> : null}
         {
-          bugType === 'onhold' ? 
-          <MenuItem onClick={handleEditClick}>
+          bugType === 'onhold' || (bugType === 'tobetested')? 
+          <MenuItem onClick={handleDeleteClick}>
             <ListItemIcon>
               <DeleteForeverRoundedIcon fontSize="small" />
             </ListItemIcon>
@@ -102,6 +106,7 @@ BugOptionMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
   bugType: PropTypes.string.isRequired,
   handleMove: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 } 
 
 export default BugOptionMenu

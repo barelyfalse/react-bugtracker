@@ -23,6 +23,18 @@ function NewBugDialog({open, onClose}) {
   const handleClose = () => {
     if(name === '' || description === '' || severity === '') {
       console.log('campos inclompletos')
+      let newBug = {
+        id: uuid(),
+        name: 'something',
+        severity: 2,
+        description: [uuid()],
+        cause: [cause],
+        solution: [solution],
+        progress: 0,
+        date: Date.now()
+      }
+      
+      onClose(newBug);
       return
     };
     
