@@ -1,0 +1,18 @@
+
+.pie-wrapper {
+  width: 2ch;
+  height: 2ch;
+  margin-bottom: 0.5ch;
+}
+
+.pie {
+  stroke-width: 8;
+  stroke: #11db80;
+  fill: none;
+}
+
+.percentage-text {
+  font-size: 1.5ch;
+  opacity: 0.5;
+  
+}

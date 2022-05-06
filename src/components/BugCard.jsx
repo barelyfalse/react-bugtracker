@@ -11,7 +11,8 @@ import {
   Tooltip
 } from '@mui/material';
 
-import BugOptionMenu from './BugOptionMenu'
+import BugOptionMenu from './BugOptionMenu';
+import ProgressPie from './ProgressPie';
 
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
@@ -70,7 +71,7 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
                 m: '.5ch',
               }}
             />
-            <Box sx={{ml:'1ch', width: '1', height: '100%'}}>
+            <Box sx={{ml:'0.5ch', width: '1', height: '100%'}}>
               <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
                 <Box
                   sx={{overflow: "hidden", 
@@ -95,14 +96,21 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
                     </Box>
                   </Stack>
                   <Box 
-                    sx={{opacity: '.6'}}
-                  >
-                    <Typography nowrap="true">{bug.description}</Typography>
+                    sx={{opacity: '.6'}}>
+                    <Typography
+                      sx={{
+                        mr: '1ch',
+                        textAlign: 'justify',
+                        fontSize: '0.8rem'
+                      }}>
+                      {bug.description}
+                    </Typography>
                   </Box>
                 </Box>
-                <Stack direction="row" justifyContent="end" sx={{mr: '1ch', opacity: '.4'}}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <ProgressPie color={severityColor} progress={bug.progress}/>
                   <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
-                    <Typography variant="caption">{date.toLocaleDateString("es-US")}</Typography>
+                    <Typography variant="caption" sx={{mr: '1ch', opacity: '.4'}}>{date.toLocaleDateString("es-US")}</Typography>
                   </Tooltip>
                 </Stack>
               </Stack>
