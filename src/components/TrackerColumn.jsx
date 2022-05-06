@@ -64,50 +64,45 @@ function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handl
           <Droppable droppableId={type}>
             {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                   
-                    
-                      {
-                        bugs ?
-                        bugs.map((bug, index) => {
-                          return (
-                            <Draggable
-                              key={bug.id}
-                              draggableId={bug.id}
-                              index={index}>
-                              {(provided) => (
-                                <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                
-                                <motion.div
-                                  key={bug.id}
-                                  initial={{
-                                    opacity: 0.5,
-                                    transform: 'scale(1)',
-                                  }}
-                                  animate={{ 
-                                    opacity: 1,
-                                    transform: 'scale(1)',
-                                    transition: { ease: "easeOut", duration: .5}
-                                  }}
-                                  exit={{opacity: 0}}
-                                  whileTap={{ 
-                                    filter: 'blur(1px)',
-                                    opacity: 0.7,
-                                    transform: 'scale(1.05)',
-                                    transition: { ease: "easeIn", duration: .5, delay: 0.1}
-                                  }}>
-                                    <BugCard
-                                      bug={bug} 
-                                      type={type}
-                                      handleBugMove={handleBugMove}
-                                      handleBugDelete={handleBugDelete} />
-                                  </motion.div>
-                                </div>
-                              )}
-                            </Draggable>
-                          )
-                        }) : <></> 
-                      }
-                  
+                  {
+                    bugs ?
+                    bugs.map((bug, index) => {
+                      return (
+                        <Draggable
+                          key={bug.id}
+                          draggableId={bug.id}
+                          index={index}>
+                          {(provided) => (
+                            <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                              <motion.div
+                                key={bug.id}
+                                initial={{
+                                  opacity: 0.5,
+                                  transform: 'scaleX(1.05)',
+                                }}
+                                animate={{ 
+                                  opacity: 1,
+                                  transform: 'scaleX(1)',
+                                  transition: { ease: "easeOut", duration: .5}
+                                }}
+                                exit={{opacity: 0}}
+                                whileTap={{ 
+                                  filter: 'blur(1px)',
+                                  opacity: 0.7,
+                                  transform: 'scale(1.05)',
+                                  transition: { ease: "easeOut", duration: .5, delay: 0.1}}}>
+                                <BugCard
+                                  bug={bug} 
+                                  type={type}
+                                  handleBugMove={handleBugMove}
+                                  handleBugDelete={handleBugDelete} />
+                              </motion.div>
+                            </div>
+                          )}
+                        </Draggable>
+                      )
+                    }) : <></> 
+                  }
                   {provided.placeholder}
                 </div>
               )
