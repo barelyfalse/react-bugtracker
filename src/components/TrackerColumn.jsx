@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types';
 import {
   useMediaQuery,
@@ -10,33 +10,12 @@ import {
   Typography,
 } from '@mui/material';
 import BugCard from '../components/BugCard';
-import { AnimatePresence } from "framer-motion";
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from "framer-motion";
 
 function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handleBugDelete}) {
   const darkmode = useTheme().palette.mode === 'dark';
   const mobile = useMediaQuery(useTheme().breakpoints.down('sm'));
-
-  const variant = {
-    initial: {
-      opacity: 0,
-      filter: 'blur(5px)',
-      //transform: 'scaleX(1.3) scaleY(1.1)',
-    },
-    animate: { 
-      opacity: 1,
-      filter: 'blur(0px)',
-      //transform: 'scaleX(1) scaleY(1)',
-      transition: { ease: "circInOut", duration: .4}
-    },
-    exit: {
-      opacity: 0,
-      //transform: 'scaleX(0.9) scaleY(0.8)',
-      filter: 'blur(5px)',
-      transition: { ease: "easeInOut", duration: .4}
-    },
-  }
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>

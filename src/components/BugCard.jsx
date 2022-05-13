@@ -1,11 +1,10 @@
-import React, { useState, useRef, createRef } from 'react'
+import React, { } from 'react'
 import PropTypes from 'prop-types';
 import {
   useTheme, 
   Box,
   Paper,
   Stack,
-  Chip,
   IconButton,
   Typography,
   Tooltip
@@ -24,6 +23,7 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
     case 1: severityColor = sevColors.normal; break;
     case 2: severityColor = sevColors.trivial; break;
     case 3: severityColor = sevColors.upgrade; break;
+    default: severityColor = sevColors.normal; break;
   }
 
   const date = new Date(bug.date);
@@ -56,7 +56,6 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
           sx={{
             borderRadius: '1ch',
             p: '.5ch',
-            boxShadow: '0',
             boxShadow: '0ch .5ch 1ch .2ch' + severityColor + '25',
             height: '14ch',
           }}

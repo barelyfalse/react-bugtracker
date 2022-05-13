@@ -1,11 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import {
   useMediaQuery,
   useTheme, 
   Container,
   Typography,
   Stack,
-  Grid
 } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useStoragedProject, getCurrentProject } from '../useLocalStorage';

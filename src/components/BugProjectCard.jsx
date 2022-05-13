@@ -1,11 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Link, useNavigate  } from "react-router-dom";
-import { useLocalStorage, getProjectData, setCurrentProject } from '../useLocalStorage'
-import { 
-  Box, 
-  Typography,
-  Container,
+import { Link } from "react-router-dom";
+import { getProjectData, setCurrentProject } from '../useLocalStorage'
+import {
   Paper,
   ButtonBase,
 } from '@mui/material';
