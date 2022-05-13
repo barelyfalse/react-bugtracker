@@ -36,7 +36,6 @@ export const useStoragedProject = (id, key, defaultValue) => {
   
   useEffect(() => {
     //storing data
-    
     var stored = getStoredData(id, defaultValue);
     stored[key] = value;
     localStorage.setItem(id, JSON.stringify(stored));
