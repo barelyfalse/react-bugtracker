@@ -11,7 +11,6 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 function NavigationBar() {
   const curDir = useLocation().pathname;
-  console.log(curDir)
   const [selectedDir, setSelectedDir] = React.useState(curDir);
   const handleDirChange = (event, newValue) => {
     setSelectedDir(newValue);
