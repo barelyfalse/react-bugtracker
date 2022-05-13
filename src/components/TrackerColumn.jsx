@@ -77,19 +77,20 @@ function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handl
                               <motion.div
                                 key={bug.id}
                                 initial={{
-                                  opacity: 0.5,
+                                  filter: darkmode ? 'brightness(2)' : 'brightness(0.8)',
                                   transform: 'scaleX(1.05)',
                                 }}
                                 animate={{ 
                                   opacity: 1,
-                                  transform: 'scaleX(1)',
+                                  filter: 'brightness(1)',
+                                  transform: 'scaleX(1) scaleY(1)',
                                   transition: { ease: "easeOut", duration: .5}
                                 }}
                                 exit={{opacity: 0}}
                                 whileTap={{ 
                                   filter: 'blur(1px)',
-                                  opacity: 0.7,
-                                  transform: 'scale(1.05)',
+                                  opacity: 0.9,
+                                  transform: 'scaleX(1.05) scaleY(1)',
                                   transition: { ease: "easeOut", duration: .5, delay: 0.1}}}>
                                 <BugCard
                                   bug={bug} 
