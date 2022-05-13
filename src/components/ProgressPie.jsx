@@ -29,7 +29,7 @@ function ProgressPie({color, progress}) {
       <div style={pieWrapperStyle}>
         <svg viewBox="0 0 20 20">
           <path style={pieStyle}
-            stroke-dasharray={(25 * progress)+', 100'}
+            strokeDasharray={(25 * progress)+', 100'}
             d="M10 6
               a 2 2 0 0 1 0 8
               a 2 2 0 0 1 0 -8"
