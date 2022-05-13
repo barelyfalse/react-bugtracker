@@ -23,6 +23,7 @@ function Bugtrack() {
   const [onProgressBugs, setOnProgressBugs] = useStoragedProject(curProj, 'onprogress', []);
   const [toBeTestedBugs, setToBeTestedBugs] = useStoragedProject(curProj, 'tobetested', []);
   const [closedBugs, setClosedBugs] = useStoragedProject(curProj, 'closed', []);
+  const [bugCounter, setBugCounter] = useStoragedProject(curProj, 'bugcounter', 1);
 
   const palette = useTheme().palette;
   const onMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
@@ -35,6 +36,7 @@ function Bugtrack() {
 
   const handleNewBugClose = (newBug) => {
     if(newBug) {
+      newBug.visibleid = getBugCounter();
       placeBug(newBug, 'onhold');
     }
     setNewBugDiagOpen(false);
@@ -206,11 +208,16 @@ function Bugtrack() {
     transferBug(result.source.droppableId, result.source.index, result.destination.droppableId, result.destination.index);
   }
 
+  function getBugCounter() {
+    setBugCounter(prevCount => prevCount + 1);
+    return 'B-'+String(bugCounter).padStart(3, '0');
+  }
+
   const columnBreackpoints = {
     default: 4,
-    1200: 3,
-    900: 2,
-    600: 1
+    1400: 3,
+    1000: 2,
+    700: 1
   };
 
   return (

@@ -51,7 +51,8 @@ export const storeNewProject = (name, id) => {
     inprogress: [],
     tobetested: [],
     onhold: [],
-    closed: []
+    closed: [],
+    bugcounter: 1
   }
   localStorage.setItem(id, JSON.stringify(newProj));
 }

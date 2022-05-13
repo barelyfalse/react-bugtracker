@@ -107,7 +107,11 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
                   </Box>
                 </Box>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <ProgressPie color={severityColor} progress={bug.progress}/>
+                  <Stack direction="row" alignItems="center">
+                    <ProgressPie color={severityColor} progress={bug.progress}/>
+                    <Typography variant="caption" sx={{ml: '1ch', opacity: '.4'}}>{bug.visibleid}</Typography>
+                  </Stack>
+                  
                   <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
                     <Typography variant="caption" sx={{mr: '1ch', opacity: '.4'}}>{date.toLocaleDateString("es-US")}</Typography>
                   </Tooltip>
@@ -116,15 +120,14 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
             </Box>
           </Stack>
         </Paper>
+        <BugOptionMenu 
+          anchorEl={menuAnchorEl}
+          open={openMenu}
+          onClose={handleMenuClose}
+          bugType={type}
+          handleMove={handleMove}
+          handleDelete={handleDelete}/>
       </div>
-      <BugOptionMenu 
-        anchorEl={menuAnchorEl}
-        open={openMenu}
-        onClose={handleMenuClose}
-        bugType={type}
-        handleMove={handleMove}
-        handleDelete={handleDelete}
-      />
     </>
   )
 }
