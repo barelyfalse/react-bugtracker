@@ -7,12 +7,13 @@ import {
   Stack,
   Grid
 } from '@mui/material';
-import {v4 as uuid} from 'uuid'
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useStoragedProject, getCurrentProject } from '../useLocalStorage';
 import TrackerColumn from '../components/TrackerColumn';
 import BugTrackerDial from '../components/BugtrackerDial';
 import NewBugDialog from '../components/NewBugDialog';
+import Masonry from 'react-masonry-css'
+import '../css/masonryColumns.css'
 
 
 function Bugtrack() {
@@ -26,7 +27,6 @@ function Bugtrack() {
 
   const palette = useTheme().palette;
   const onMobile = useMediaQuery(useTheme().breakpoints.down('sm'));
-  const nodeRef = useRef(null);
 
   const [newBugDiagOpen, setNewBugDiagOpen] = React.useState(false);
 
@@ -105,8 +105,6 @@ function Bugtrack() {
         break;
     }
   }
-
-  
 
   //delete bug
   const handleBugDelete = (bugId, source) => {
@@ -209,6 +207,13 @@ function Bugtrack() {
     transferBug(result.source.droppableId, result.source.index, result.destination.droppableId, result.destination.index);
   }
 
+  const columnBreackpoints = {
+    default: 4,
+    1200: 3,
+    900: 2,
+    600: 1
+  };
+
   return (
     <Container maxWidth="xl" sx={{mt: '2ch', overflow: 'hidden', pb: '10ch'}}>
       
@@ -218,40 +223,43 @@ function Bugtrack() {
         <Typography variant="h5" >{projectName}</Typography>
       </Stack>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Grid container spacing={{xl: 4, sm: 2, xs: 1}} rowSpacing={4}>
-        <TrackerColumn 
-          type="open" 
-          title="Abierto" 
-          bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.open}
-          bugs={openBugs}
-          handleBugMove={handleBugMove}
-          handleBugDelete={handleBugDelete}/>
-        <TrackerColumn 
-          type="onprogress" 
-          title="En progreso" 
-          bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.inprogress}
-          bugs={onProgressBugs}
-          handleBugMove={handleBugMove}
-          handleBugDelete={handleBugDelete}/>
-        <TrackerColumn 
-          type="tobetested" 
-          title="Para ser probado" 
-          bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.tobetested}
-          bugs={toBeTestedBugs}
-          handleBugMove={handleBugMove}
-          handleBugDelete={handleBugDelete}/>
-        <TrackerColumn 
-          type="onhold" 
-          title="En espera" 
-          bgcolor={palette.bugcolumn.main} 
-          accent={palette.state.onhold}
-          bugs={onHoldBugs}
-          handleBugMove={handleBugMove}
-          handleBugDelete={handleBugDelete}/>
-      </Grid>
+        <Masonry
+          breakpointCols={columnBreackpoints}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column">
+          <TrackerColumn 
+            type="open" 
+            title="Abierto" 
+            bgcolor={palette.bugcolumn.main} 
+            accent={palette.state.open}
+            bugs={openBugs}
+            handleBugMove={handleBugMove}
+            handleBugDelete={handleBugDelete}/>
+          <TrackerColumn 
+            type="onprogress" 
+            title="En progreso" 
+            bgcolor={palette.bugcolumn.main} 
+            accent={palette.state.inprogress}
+            bugs={onProgressBugs}
+            handleBugMove={handleBugMove}
+            handleBugDelete={handleBugDelete}/>
+          <TrackerColumn 
+            type="tobetested" 
+            title="Para ser probado" 
+            bgcolor={palette.bugcolumn.main} 
+            accent={palette.state.tobetested}
+            bugs={toBeTestedBugs}
+            handleBugMove={handleBugMove}
+            handleBugDelete={handleBugDelete}/>
+          <TrackerColumn 
+            type="onhold" 
+            title="En espera" 
+            bgcolor={palette.bugcolumn.main} 
+            accent={palette.state.onhold}
+            bugs={onHoldBugs}
+            handleBugMove={handleBugMove}
+            handleBugDelete={handleBugDelete}/>
+        </Masonry>
       </DragDropContext>
       <BugTrackerDial 
         onMobile={onMobile} 
