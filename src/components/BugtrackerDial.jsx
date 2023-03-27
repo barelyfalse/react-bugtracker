@@ -6,8 +6,6 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 
-
-
 function BugTrackerDial({onMobile, newBug}) {
   const actions = [
     { icon: <AddRoundedIcon />, name: 'Add', action: newBug  },
