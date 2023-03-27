@@ -96,6 +96,9 @@ function Home() {
           </Grid>
         </Grid>
       </Box>
+      <Typography variant="caption" display="block" align='center'>
+        This project stores bugtracking data locally, this data can be deleted. Remember to back up your bugs!
+      </Typography>
       <NewProjectDialog 
         open={newProjDialogOpen}
         onClose={handleNewProjectDialogClose}
