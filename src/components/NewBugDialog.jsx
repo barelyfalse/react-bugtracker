@@ -9,7 +9,8 @@ import {
   TextField,
   Button,
   MenuItem,
-  Grid
+  Grid,
+  Typography,
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 
@@ -20,6 +21,9 @@ function NewBugDialog({open, onClose}) {
   const [solution, setSolution] = useState('');
   const [severity, setSeverity] = useState('');
 
+  const itemStyle = { fontSize: '0.75em'};
+  const listStyle = { marginTop: '0', marginBottom: '0', opacity:'0.7', fontWeight:'400'};
+
   const handleClose = () => {
     if(name === '' || description === '' || severity === '') {
       console.log('campos inclompletos')
@@ -27,11 +31,12 @@ function NewBugDialog({open, onClose}) {
         id: uuid(),
         name: 'something',
         severity: 2,
-        description: [uuid()],
-        cause: [cause],
-        solution: [solution],
+        description: uuid(),
+        cause: cause,
+        solution: solution,
         progress: 0,
-        date: Date.now()
+        date: Date.now(),
+        updates: [ { id: uuid(), timeStamp: Date.now, type: 1, text: "Added"} ]
       }
       
       onClose(newBug);
@@ -42,11 +47,12 @@ function NewBugDialog({open, onClose}) {
       id: uuid(),
       name: name,
       severity: severity,
-      description: [description],
-      cause: [cause],
-      solution: [solution],
+      description: description,
+      cause: cause,
+      solution: solution,
       progress: 0,
-      date: Date.now()
+      date: Date.now(),
+      updates: [ { id: uuid(), timeStamp: Date.now, type: 1, text: "Added"} ]
     }
     
     onClose(newBug);
@@ -103,7 +109,7 @@ function NewBugDialog({open, onClose}) {
             </TextField>
           </Grid>
         </Grid>
-        
+
         <TextField
           fullWidth
           multiline
@@ -111,11 +117,19 @@ function NewBugDialog({open, onClose}) {
           id="bugdescription"
           label="Descripción"
           placeholder="Descripción"
-          helperText="Requerido"
           value={description}
           onChange={(event) => (setDescription(event.target.value))}
           onBlur={(event) => {setDescription(event.target.value.trim())}}
         />
+        <div>
+          <Typography sx={{marginLeft:'1rem', opacity:'0.7'}} variant="caption">Procura incluir:</Typography>
+          <ul style={listStyle}>
+            <li style={itemStyle}>Comportamiento</li>
+            <li style={itemStyle}>Mensajes de error</li>
+            <li style={itemStyle}>Pasos para replicar</li>
+          </ul>
+        </div>
+       
         <Grid container spacing={1}>
           <Grid item sm={6} xs={12}>
             <TextField
