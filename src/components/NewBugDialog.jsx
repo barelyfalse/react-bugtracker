@@ -52,7 +52,7 @@ function NewBugDialog({open, onClose}) {
       solution: solution,
       progress: 0,
       date: Date.now(),
-      updates: [ { id: uuid(), timeStamp: Date.now, type: 1, text: "Added"} ]
+      updates: [ { id: uuid(), timeStamp: Date.now(), type: 1, text: "Added"} ]
     }
     
     onClose(newBug);
