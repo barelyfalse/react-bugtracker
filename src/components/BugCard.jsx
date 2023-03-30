@@ -112,11 +112,11 @@ function BugCard({bug, type, handleBugMove, handleBugDelete, handleBugOpenEdit})
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Stack direction="row" alignItems="center">
                     <ProgressPie color={severityColor} progress={bug.progress}/>
-                    <Typography variant="caption" sx={{ml: '1ch', opacity: '.4'}}>{bug.visibleid}</Typography>
+                    <Typography variant="caption" sx={{ml: '1ch', mt: '2px', lineHeight: '1', opacity: '.4'}}>{bug.visibleid}</Typography>
                   </Stack>
                   
                   <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
-                    <Typography variant="caption" sx={{mr: '1ch', opacity: '.4'}}>{date.toLocaleDateString("es-US")}</Typography>
+                    <Typography variant="caption" sx={{mr: '1ch', lineHeight: '1', opacity: '.4'}}>{date.toLocaleDateString("es-US")}</Typography>
                   </Tooltip>
                 </Stack>
               </Stack>
