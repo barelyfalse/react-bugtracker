@@ -75,7 +75,7 @@ function BugCard({bug, type, handleBugMove, handleBugDelete, handleBugOpenEdit})
               }}
             />
             <Box sx={{ml:'0.5ch', width: '94%', maxWidth: '95%', height: '100%'}}>
-              <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
+              <Stack direction="column" justifyContent="space-between" sx={{height: '12.9ch'}}>
                 <Box
                   sx={{overflow: "hidden", 
                     textOverflow: "ellipsis",
@@ -113,6 +113,7 @@ function BugCard({bug, type, handleBugMove, handleBugDelete, handleBugOpenEdit})
                   <Stack direction="row" alignItems="center">
                     <ProgressPie color={severityColor} progress={bug.progress}/>
                     <Typography variant="caption" sx={{ml: '1ch', mt: '2px', lineHeight: '1', opacity: '.4'}}>{bug.visibleid}</Typography>
+                    <Typography variant="caption" sx={{ml: '1ch', mt: '2px', lineHeight: '1', opacity: '.4'}}>UPD: {bug.updates ? bug.updates.length - 1 : 0}</Typography>
                   </Stack>
                   
                   <Tooltip title={date.toLocaleTimeString("es-US")} placement="left" arrow>
