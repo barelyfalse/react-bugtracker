@@ -15,7 +15,7 @@ import ProgressPie from './ProgressPie';
 
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
-function BugCard({bug, type, handleBugMove, handleBugDelete}) {
+function BugCard({bug, type, handleBugMove, handleBugDelete, handleBugOpenEdit}) {
   const sevColors = useTheme().palette.severity;
   let severityColor;
   switch (bug.severity) {
@@ -48,6 +48,10 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
     handleBugDelete(bug.id, type);
   }
 
+  //bug edit
+  const handleOpenEditDialog = () => {
+    handleBugOpenEdit(bug);
+  }
 
   return (
     <>
@@ -64,18 +68,17 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
             <Box 
               sx={{ 
                 backgroundColor: severityColor, 
-                width: '6px', 
+                width: '5px', 
                 height: '12ch',
                 borderRadius: '1ch',
                 m: '.5ch',
               }}
             />
-            <Box sx={{ml:'0.5ch', width: '1', height: '100%'}}>
+            <Box sx={{ml:'0.5ch', width: '94%', maxWidth: '95%', height: '100%'}}>
               <Stack direction="column" justifyContent="space-between" sx={{height: '13ch'}}>
                 <Box
                   sx={{overflow: "hidden", 
-                    textOverflow: "ellipsis", 
-                    
+                    textOverflow: "ellipsis",
                   }}
                 >
                   <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -126,7 +129,9 @@ function BugCard({bug, type, handleBugMove, handleBugDelete}) {
           onClose={handleMenuClose}
           bugType={type}
           handleMove={handleMove}
-          handleDelete={handleDelete}/>
+          handleDelete={handleDelete}
+          handleOpenEdit={handleOpenEditDialog} 
+        />
       </div>
     </>
   )

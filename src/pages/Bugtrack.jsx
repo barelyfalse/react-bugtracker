@@ -11,6 +11,7 @@ import { useStoragedProject, getCurrentProject } from '../useLocalStorage';
 import TrackerColumn from '../components/TrackerColumn';
 import BugTrackerDial from '../components/BugtrackerDial';
 import NewBugDialog from '../components/NewBugDialog';
+import UpdateBugDialog from '../components/UpdateBugDialog';
 import Masonry from 'react-masonry-css'
 import '../css/masonryColumns.css'
 
@@ -40,6 +41,21 @@ function Bugtrack() {
       placeBug(newBug, 'onhold');
     }
     setNewBugDiagOpen(false);
+  }
+
+  const [updateBugDiagOpen, setUpdateBugDiagOpen] = React.useState(false);
+  const [bugToEdit, setBugToEdit] = React.useState({});
+
+  const handleUpdateBugDiagClickOpen = (b) => {
+    setBugToEdit(b);
+    setUpdateBugDiagOpen(true);
+  }
+
+  const handleUpdateBugDiagClose = (updatedBug) => {
+    if(updatedBug) {
+
+    }
+    setUpdateBugDiagOpen(false);
   }
 
   //move bug 
@@ -137,7 +153,7 @@ function Bugtrack() {
     }
   }
 
-  function transferBug(source, sourceIdx, destination, destinationIdx) {
+  const transferBug = (source, sourceIdx, destination, destinationIdx) => {
     if(!source || !destination) return;
     let transferedBug = {};
     const deleteBug = (prevBugs) => {
@@ -199,8 +215,7 @@ function Bugtrack() {
         console.log('Error placing bug, unknown destination');
         break;
     }
-
-  } 
+  }
 
   function handleOnDragEnd(result) {
     //console.log(result);
@@ -240,7 +255,8 @@ function Bugtrack() {
             accent={palette.state.open}
             bugs={openBugs}
             handleBugMove={handleBugMove}
-            handleBugDelete={handleBugDelete}/>
+            handleBugDelete={handleBugDelete}
+            handleBugOpenEdit={handleUpdateBugDiagClickOpen} />
           <TrackerColumn 
             type="onprogress" 
             title="En progreso" 
@@ -248,7 +264,8 @@ function Bugtrack() {
             accent={palette.state.inprogress}
             bugs={onProgressBugs}
             handleBugMove={handleBugMove}
-            handleBugDelete={handleBugDelete}/>
+            handleBugDelete={handleBugDelete}
+            handleBugOpenEdit={handleUpdateBugDiagClickOpen} />
           <TrackerColumn 
             type="tobetested" 
             title="Para ser probado" 
@@ -256,7 +273,8 @@ function Bugtrack() {
             accent={palette.state.tobetested}
             bugs={toBeTestedBugs}
             handleBugMove={handleBugMove}
-            handleBugDelete={handleBugDelete}/>
+            handleBugDelete={handleBugDelete}
+            handleBugOpenEdit={handleUpdateBugDiagClickOpen} />
           <TrackerColumn 
             type="onhold" 
             title="En espera" 
@@ -264,17 +282,23 @@ function Bugtrack() {
             accent={palette.state.onhold}
             bugs={onHoldBugs}
             handleBugMove={handleBugMove}
-            handleBugDelete={handleBugDelete}/>
+            handleBugDelete={handleBugDelete}
+            handleBugOpenEdit={handleUpdateBugDiagClickOpen} />
         </Masonry>
       </DragDropContext>
       <BugTrackerDial 
         onMobile={onMobile} 
-        newBug={handleNewBugClickOpen}
-      />
+        newBug={handleNewBugClickOpen} />
       <NewBugDialog 
         open={newBugDiagOpen} 
-        onClose={handleNewBugClose} 
-      />
+        onClose={handleNewBugClose} />
+      {bugToEdit && 
+        <UpdateBugDialog
+          open={updateBugDiagOpen}
+          onClose={handleUpdateBugDiagClose} 
+          bugToEdit={bugToEdit} />
+      }
+      
     </Container>
   )
 }

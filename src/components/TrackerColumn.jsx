@@ -13,7 +13,7 @@ import BugCard from '../components/BugCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { motion } from "framer-motion";
 
-function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handleBugDelete}) {
+function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handleBugDelete, handleBugOpenEdit}) {
   const darkmode = useTheme().palette.mode === 'dark';
   const mobile = useMediaQuery(useTheme().breakpoints.down('sm'));
 
@@ -75,7 +75,8 @@ function TrackerColumn({type, title, bgcolor, accent, bugs, handleBugMove, handl
                                   bug={bug} 
                                   type={type}
                                   handleBugMove={handleBugMove}
-                                  handleBugDelete={handleBugDelete} />
+                                  handleBugDelete={handleBugDelete} 
+                                  handleBugOpenEdit={handleBugOpenEdit} />
                               </motion.div>
                             </div>
                           )}

@@ -7,7 +7,6 @@ function ProgressPie({color, progress}) {
   const pieWrapperStyle = {
     width: '2ch',
     height: '2ch',
-    marginBottom: '0.5ch',
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
     borderRadius: '50%'
   };

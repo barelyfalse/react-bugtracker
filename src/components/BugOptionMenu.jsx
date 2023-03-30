@@ -12,8 +12,9 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove, handleDelete}) {
+function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove, handleDelete, handleOpenEdit}) {
   const handleEditClick = () => {
+    handleOpenEdit();
     onClose();
   }
   const handleMoveClick = (des) => {
@@ -47,7 +48,7 @@ function BugOptionMenu({anchorEl, open, onClose, bugType, handleMove, handleDele
         {
           bugType === 'onhold' || bugType === 'open' || bugType === 'onprogress' ?
           <MenuItem disabled>
-            <ListItemText><i>Mover a</i></ListItemText>
+            <ListItemText><i>Mover a&nbsp;</i></ListItemText>
             <ListItemIcon>
               <ArrowForwardRoundedIcon fontSize="small" />
             </ListItemIcon>
