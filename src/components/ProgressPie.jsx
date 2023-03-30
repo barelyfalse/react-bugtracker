@@ -35,7 +35,7 @@ function ProgressPie({color, progress}) {
           />
         </svg>
       </div>
-      <span style={percentageTextStyle}>{(Math.floor((progress * 100) * 10) / 10)}%</span>
+      <span style={percentageTextStyle}>{(Math.round((progress * 100) * 10) / 10)}%</span>
     </Stack>
   )
 }
