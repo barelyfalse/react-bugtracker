@@ -13,7 +13,8 @@ import {
   Grid,
   Typography,
   Slider,
-  Input
+  Input,
+  Stack
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import ProgressPie from './ProgressPie';
@@ -25,6 +26,7 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
   const [solution, setSolution] = useState('');
   const [severity, setSeverity] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [update, setUpdate] = useState('')
   const [progressRead, setProgressRead] = useState(0)
 
   const handleClose = () => {
@@ -62,6 +64,8 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
     setProgressRead(bugToEdit.progress * 100)
   }, [bugToEdit]);
 
+  let lastUpdDate = 0;
+
   return (
     <Dialog onClose={handleClose} open={open} scroll="paper" fullWidth>
       <DialogTitle>Actualizar {bugToEdit.visibleid}</DialogTitle>
@@ -72,11 +76,11 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
         <Grid container spacing={1}>
           <Grid item sm={6} xs={12}>
             <TextField
+              disabled
               fullWidth
               margin="dense"
               id="bugname"
               label="Nombre corto"
-              helperText="Requerido"
               value={name}
               onChange={(event) => {setName(event.target.value)}}
               onBlur={(event) => {setName(event.target.value.trim())}}
@@ -91,7 +95,6 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
               label="Severidad"
               value={severity}
               onChange={(event) => (setSeverity(event.target.value))}
-              helperText="Requerido"
             >
               <MenuItem value="-1" disabled>Severidad</MenuItem>
               {
@@ -111,7 +114,7 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
           label="Descripción"
           placeholder="Descripción"
           helperText="Requerido"
-          defaultValue={description}
+          value={description}
           onChange={(event) => (setDescription(event.target.value))}
           onBlur={(event) => {setDescription(event.target.value.trim())}}
         />
@@ -145,9 +148,23 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={12}><Typography variant="caption" sx={{marginLeft: '1rem', opacity: '0.7'}}>Progreso</Typography></Grid>
+          
         </Grid>
         <Grid container spacing={1} alignItems="center">
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              multiline
+              margin="dense"
+              id="bugupdate"
+              label="Actualización"
+              placeholder="Actualización"
+              value={update}
+              onChange={(event) => (setUpdate(event.target.value))}
+              onBlur={(event) => {setUpdate(event.target.value.trim())}}
+            />
+          </Grid>
+          <Grid item xs={12}><Typography variant="caption" sx={{marginLeft: '0.8rem', opacity: '0.7'}}>Progreso</Typography></Grid>
           <Grid item style={{paddingTop: '4px', width: '4rem'}}>
             <ProgressPie color={useTheme().palette.primary.main} progress={progress} />
           </Grid>
@@ -177,9 +194,31 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
             />
           </Grid>
         </Grid>
-        <Typography variant="h6">Cambios</Typography>
+        <Typography variant="h6">Historial de cambios</Typography>
         <Grid container>
-          
+          <Stack direction="column">
+            {
+              bugToEdit.updates && bugToEdit.updates.map((upd, index) => {
+                let date = new Date(upd.timeStamp)
+                if(upd.timeStamp > lastUpdDate) {
+                  lastUpdDate = upd.timeStamp
+                  return <Stack direction="column" key={index}>
+                    <Typography variant="caption">&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>
+                    <Stack direction="row">
+                      <Typography variant="caption" sx={{opacity: '0.7'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                      <Typography variant="caption">&nbsp;{upd.text}</Typography>
+                    </Stack>
+                  </Stack>
+                } else {
+                  console.log('nomas 2')
+                  return <Stack direction="row" key={index}>
+                    <Typography variant="caption" sx={{opacity: '0.7'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                    <Typography variant="caption">&nbsp;{upd.text}</Typography>
+                  </Stack>
+                }
+              })
+            }
+          </Stack>
         </Grid>
       </DialogContent>
       <DialogActions>
