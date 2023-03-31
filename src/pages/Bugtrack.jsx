@@ -53,7 +53,8 @@ function Bugtrack() {
 
   const handleUpdateBugDiagClose = (updatedBug) => {
     if(updatedBug) {
-
+      console.log('Updated bug')
+      console.log(updatedBug)
     }
     setUpdateBugDiagOpen(false);
   }

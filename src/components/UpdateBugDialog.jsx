@@ -20,30 +20,93 @@ import { v4 as uuid } from 'uuid';
 import ProgressPie from './ProgressPie';
 
 function UpdateBugDialog({open, onClose, bugToEdit}) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [cause, setCause] = useState('');
-  const [solution, setSolution] = useState('');
-  const [severity, setSeverity] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [name, setName] = useState('')
+  const [severity, setSeverity] = useState(0)
+  const [description, setDescription] = useState('')
+  const [cause, setCause] = useState('')
+  const [solution, setSolution] = useState('')
+  const [progress, setProgress] = useState(0)
+  const [updates, setUpdates] = useState([])
   const [update, setUpdate] = useState('')
+
+  useEffect(() => {
+    setName(bugToEdit.name)
+    setSeverity(bugToEdit.severity)
+    setDescription(bugToEdit.description)
+    setCause(bugToEdit.cause)
+    setSolution(bugToEdit.solution)
+    setProgress(bugToEdit.progress)
+    setUpdates(bugToEdit.updates)
+  }, [bugToEdit]);
+
+  const appendUpdate = (text, type) => {
+    const curUpdates = [...updates];
+    curUpdates.push({
+      id: uuid(),
+      text: text,
+      timeStamp: Date.now(),
+      type: type
+    })
+    setUpdates(curUpdates)
+  }
 
   const handleClose = () => {
     onClose();
   }
   const handleUpdate = () => {
-    
-    onClose();
-  }
+    /**
+     * types
+     * 1 - added
+     * 2 - some field updated
+     * 3 - severity updated
+     * 4 - progress updated
+     * 5 - update added
+     * 6 - moved to another column 
+     */
+    let somethingUpdated = false;
+    let updBug = {...bugToEdit}
+    if(severity != bugToEdit.severity) {
+      const s = ['crítico', 'normal', 'trivial', 'mejora']
+      appendUpdate(`Severidad actualizada, ${s[bugToEdit.severity]} > ${s[severity]}`, 3)
+      updBug.severity = severity
+      somethingUpdated = true
+    }
+    if(description != bugToEdit.description) {
+      appendUpdate('Descripción actualizada', 2)
+      updBug.description = description
+      somethingUpdated = true
+    }
+    if(cause != bugToEdit.cause) {
+      appendUpdate('Posible causa actualizada', 2)
+      updBug.cause = cause
+      somethingUpdated = true
+    }
+    if(solution != bugToEdit.solution) {
+      appendUpdate('Posible solución actualizada', 2)
+      updBug.solution = solution
+      somethingUpdated = true
+    }
+    if(progress != bugToEdit.progress) {
+      appendUpdate('Progreso actualizado', 4)
+      updBug.progress = progress
+      somethingUpdated = true
+    }
+    if(update != "" && updates.length != bugToEdit.length) {
+      appendUpdate('Actualización añadida', 5)
+      updBug.updates = updates
+      somethingUpdated = true
+    }
 
-  useEffect(() => {
-    setName(bugToEdit.name)
-    setDescription(bugToEdit.description)
-    setCause(bugToEdit.cause)
-    setSolution(bugToEdit.solution)
-    setSeverity(bugToEdit.severity)
-    setProgress(bugToEdit.progress)
-  }, [bugToEdit]);
+    if(somethingUpdated) {
+      console.log('Old bug')
+      console.log(bugToEdit)
+      onClose(updBug);
+    } else {
+      onClose()
+    }
+
+    
+  }
 
   let lastUpdDate = 0;
 
@@ -85,22 +148,20 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
               }
             </TextField>
           </Grid>
-        </Grid>
-
-        <TextField
-          fullWidth
-          multiline
-          margin="dense"
-          id="bugdescription"
-          label="Descripción"
-          placeholder="Descripción"
-          helperText="Requerido"
-          value={description}
-          onChange={(event) => (setDescription(event.target.value))}
-          onBlur={(event) => {setDescription(event.target.value.trim())}}
-        />
-
-        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              multiline
+              margin="dense"
+              id="bugdescription"
+              label="Descripción"
+              placeholder="Descripción"
+              helperText="Requerido"
+              value={description}
+              onChange={(event) => (setDescription(event.target.value))}
+              onBlur={(event) => {setDescription(event.target.value.trim())}}
+            />
+          </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
               fullWidth
@@ -127,11 +188,6 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
               onBlur={(event) => {setSolution(event.target.value.trim())}}
             />
           </Grid>
-        </Grid>
-        <Grid container>
-          
-        </Grid>
-        <Grid container spacing={1} alignItems="center">
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -146,66 +202,67 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
             />
           </Grid>
           <Grid item xs={12}><Typography variant="caption" sx={{marginLeft: '0.8rem', opacity: '0.7'}}>Progreso</Typography></Grid>
-          <Grid item style={{paddingTop: '4px', width: '4rem'}}>
-            <ProgressPie color={useTheme().palette.primary.main} progress={progress} />
+          <Grid item xs={12}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Slider
+                value={typeof progress === 'number' ? progress : 0}
+                onChange={(event) => setProgress(event.target.value)}
+                aria-labelledby="input-slider"
+                step={0.01}
+                min={0}
+                max={1}
+                sx={{ml: '.5rem'}}
+              />
+              <ProgressPie color={useTheme().palette.primary.main} progress={progress} nolabel/>
+              <Input
+                value={Math.round(progress * 100)}
+                size="small"
+                onChange={(event) => {
+                  setProgress(Number(event.target.value) / 100)
+                }}
+                onBlur={(event) => {
+                  if (Number(event.target.value) > 100)
+                    setProgress(1)
+                  else if (Number(event.target.value) < 0)
+                    setProgress(0) 
+                }}
+                inputProps={{
+                  step: 1,
+                  min: 0,
+                  max: 100,
+                  type: 'number',
+                  'aria-labelledby': 'input-slider',
+                }}
+              />
+            </Stack>
           </Grid>
-          <Grid item xs>
-            <Slider
-              value={typeof progress === 'number' ? progress : 0}
-              onChange={(event) => setProgress(event.target.value)}
-              aria-labelledby="input-slider"
-              step={0.01}
-              min={0}
-              max={1}
-            />
+          <Grid item xs={12}>
+            <Typography variant="h6">Historial de cambios</Typography>
           </Grid>
-          <Grid item>
-            <Input
-              value={Math.round(progress * 100)}
-              size="small"
-              onChange={(event) => {
-                setProgress(Number(event.target.value) / 100)
-              }}
-              onBlur={(event) => {
-                if (Number(event.target.value) > 100)
-                  setProgress(1)
-                else if (Number(event.target.value) < 0)
-                  setProgress(0) 
-              }}
-              inputProps={{
-                step: 1,
-                min: 0,
-                max: 100,
-                type: 'number',
-                'aria-labelledby': 'input-slider',
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Typography variant="h6">Historial de cambios</Typography>
-        <Grid container>
-          <Stack direction="column">
-            {
-              bugToEdit.updates && bugToEdit.updates.map((upd, index) => {
-                let date = new Date(upd.timeStamp)
-                if(upd.timeStamp > lastUpdDate) {
-                  lastUpdDate = upd.timeStamp
-                  return <Stack direction="column" key={index}>
-                    <Typography variant="caption">&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>
-                    <Stack direction="row">
+          <Grid item xs={12}>
+            <Stack direction="column-reverse">
+              {
+                updates && updates.map((upd, index) => {
+                  let date = new Date(upd.timeStamp)
+                  if(upd.timeStamp > lastUpdDate) {
+                    lastUpdDate = upd.timeStamp
+                    return [
+                      <Typography variant="caption" key={index+1000}>&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>,
+                      <Stack direction="row" key={index}>
+                        <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                        <Typography variant="caption">&nbsp;{upd.text}</Typography>
+                      </Stack>
+                    ]
+                  } else {
+                    return <Stack direction="row" key={index}>
                       <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
                       <Typography variant="caption">&nbsp;{upd.text}</Typography>
                     </Stack>
-                  </Stack>
-                } else {
-                  return <Stack direction="row" key={index}>
-                    <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
-                    <Typography variant="caption">&nbsp;{upd.text}</Typography>
-                  </Stack>
-                }
-              })
-            }
-          </Stack>
+                  }
+                })
+              }
+            </Stack>
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
