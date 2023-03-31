@@ -3,7 +3,7 @@ import React from 'react'
 import {Stack} from '@mui/material';
 import '../css/progressPie.css';
 
-function ProgressPie({color, progress}) {
+function ProgressPie({color, progress, nolabel}) {
   const pieWrapperStyle = {
     width: '2ch',
     height: '2ch',
@@ -35,7 +35,9 @@ function ProgressPie({color, progress}) {
           />
         </svg>
       </div>
-      <span style={percentageTextStyle}>{(Math.round((progress * 100) * 10) / 10)}%</span>
+      {
+        !nolabel && <span style={percentageTextStyle}>{(Math.round((progress * 100) * 10) / 10)}%</span>
+      }
     </Stack>
   )
 }
