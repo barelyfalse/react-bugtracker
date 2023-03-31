@@ -205,14 +205,14 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
                   return <Stack direction="column" key={index}>
                     <Typography variant="caption">&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>
                     <Stack direction="row">
-                      <Typography variant="caption" sx={{opacity: '0.7'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                      <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
                       <Typography variant="caption">&nbsp;{upd.text}</Typography>
                     </Stack>
                   </Stack>
                 } else {
                   console.log('nomas 2')
                   return <Stack direction="row" key={index}>
-                    <Typography variant="caption" sx={{opacity: '0.7'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                    <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
                     <Typography variant="caption">&nbsp;{upd.text}</Typography>
                   </Stack>
                 }
