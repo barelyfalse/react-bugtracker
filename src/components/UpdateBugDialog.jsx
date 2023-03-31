@@ -27,32 +27,14 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
   const [severity, setSeverity] = useState(0);
   const [progress, setProgress] = useState(0);
   const [update, setUpdate] = useState('')
-  const [progressRead, setProgressRead] = useState(0)
 
   const handleClose = () => {
     onClose();
   }
   const handleUpdate = () => {
+    
     onClose();
   }
-
-  const handleSliderChange = (event, newValue) => {
-    setProgress(newValue);
-    setProgressRead(Math.round(newValue * 100));
-  };
-
-  const handleInputChange = (event) => {
-    setProgress(event.target.value === '' ? '' : Number(event.target.value / 100));
-    setProgressRead(event.target.value === '' ? '' : Number(event.target.value));
-  };
-
-  const handleBlur = () => {
-    if (progressRead < 0) {
-      setProgressRead(0);
-    } else if (progressRead > 100) {
-      setProgressRead(1);
-    }
-  };
 
   useEffect(() => {
     setName(bugToEdit.name)
@@ -61,7 +43,6 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
     setSolution(bugToEdit.solution)
     setSeverity(bugToEdit.severity)
     setProgress(bugToEdit.progress)
-    setProgressRead(bugToEdit.progress * 100)
   }, [bugToEdit]);
 
   let lastUpdDate = 0;
@@ -160,8 +141,8 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
               label="Actualización"
               placeholder="Actualización"
               value={update}
-              onChange={(event) => (setUpdate(event.target.value))}
-              onBlur={(event) => {setUpdate(event.target.value.trim())}}
+              onChange={(event) => setUpdate(event.target.value)}
+              onBlur={(event) => setUpdate(event.target.value.trim())}
             />
           </Grid>
           <Grid item xs={12}><Typography variant="caption" sx={{marginLeft: '0.8rem', opacity: '0.7'}}>Progreso</Typography></Grid>
@@ -171,7 +152,7 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
           <Grid item xs>
             <Slider
               value={typeof progress === 'number' ? progress : 0}
-              onChange={handleSliderChange}
+              onChange={(event) => setProgress(event.target.value)}
               aria-labelledby="input-slider"
               step={0.01}
               min={0}
@@ -180,10 +161,17 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
           </Grid>
           <Grid item>
             <Input
-              value={progressRead}
+              value={Math.round(progress * 100)}
               size="small"
-              onChange={handleInputChange}
-              onBlur={handleBlur}
+              onChange={(event) => {
+                setProgress(Number(event.target.value) / 100)
+              }}
+              onBlur={(event) => {
+                if (Number(event.target.value) > 100)
+                  setProgress(1)
+                else if (Number(event.target.value) < 0)
+                  setProgress(0) 
+              }}
               inputProps={{
                 step: 1,
                 min: 0,
@@ -210,7 +198,6 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
                     </Stack>
                   </Stack>
                 } else {
-                  console.log('nomas 2')
                   return <Stack direction="row" key={index}>
                     <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
                     <Typography variant="caption">&nbsp;{upd.text}</Typography>
