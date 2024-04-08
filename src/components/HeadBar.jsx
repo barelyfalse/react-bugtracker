@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ListItemButton,
   Divider,
   Drawer,
   Paper,
@@ -70,25 +71,25 @@ export function HeadBar({onLights}) {
             </Paper>
           </ListItem>
           <Divider />
-          <ListItem button key='home' component={Link} to="/" onClick={toggleDrawer(false)}>
+          <ListItemButton key='home' component={Link} to="/" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <HomeRoundedIcon />   
             </ListItemIcon>
             <ListItemText primary='Home' />
-          </ListItem>
+          </ListItemButton>
           
-          <ListItem button key='bugtrack' component={Link} to="bugtrack" onClick={toggleDrawer(false)}>
+          <ListItemButton key='bugtrack' component={Link} to="bugtrack" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <BugReportRoundedIcon />  
             </ListItemIcon>
             <ListItemText primary='Bugtracker' />
-          </ListItem>
-          <ListItem button key='info' component={Link} to="/" onClick={toggleDrawer(false)}>
+          </ListItemButton>
+          <ListItemButton key='info' component={Link} to="/" onClick={toggleDrawer(false)}>
             <ListItemIcon>
               <InfoRoundedIcon />  
             </ListItemIcon>
             <ListItemText primary='Info' />
-          </ListItem>
+          </ListItemButton>
         </List>
         <Divider />
         <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{mt: '2ch'}}>

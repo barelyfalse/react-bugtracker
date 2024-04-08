@@ -14,7 +14,8 @@ import {
   Typography,
   Slider,
   Input,
-  Stack
+  Stack,
+  Box
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import ProgressPie from './ProgressPie';
@@ -39,8 +40,23 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
     setUpdates(bugToEdit.updates)
   }, [bugToEdit]);
 
+  useEffect(() => {
+    if (bugToEdit.updates && updates.length !== bugToEdit.updates.length) {
+      let updBug = {...bugToEdit};
+      updBug.severity = severity
+      updBug.description = description
+      updBug.cause = cause
+      updBug.solution = solution
+      updBug.progress = progress
+      updBug.updates = updates
+      onClose(updBug);
+    }
+  }, updates)
+
   const appendUpdate = (text, type) => {
-    const curUpdates = [...updates];
+    
+    let curUpdates = [...updates];
+    //console.log(curUpdates)
     curUpdates.push({
       id: uuid(),
       text: text,
@@ -48,6 +64,7 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
       type: type
     })
     setUpdates(curUpdates)
+    //console.log(curUpdates)
   }
 
   const handleClose = () => {
@@ -64,43 +81,37 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
      * 6 - moved to another column 
      */
     let somethingUpdated = false;
-    let updBug = {...bugToEdit}
-    if(severity != bugToEdit.severity) {
+    if(severity !== bugToEdit.severity) {
       const s = ['crítico', 'normal', 'trivial', 'mejora']
       appendUpdate(`Severidad actualizada, ${s[bugToEdit.severity]} > ${s[severity]}`, 3)
-      updBug.severity = severity
       somethingUpdated = true
     }
-    if(description != bugToEdit.description) {
+    if(description !== bugToEdit.description) {
       appendUpdate('Descripción actualizada', 2)
-      updBug.description = description
       somethingUpdated = true
     }
-    if(cause != bugToEdit.cause) {
+    if(cause !== bugToEdit.cause) {
       appendUpdate('Posible causa actualizada', 2)
-      updBug.cause = cause
       somethingUpdated = true
     }
-    if(solution != bugToEdit.solution) {
+    if(solution !== bugToEdit.solution) {
       appendUpdate('Posible solución actualizada', 2)
-      updBug.solution = solution
       somethingUpdated = true
     }
-    if(progress != bugToEdit.progress) {
+    if(progress !== bugToEdit.progress) {
       appendUpdate('Progreso actualizado', 4)
-      updBug.progress = progress
       somethingUpdated = true
     }
-    if(update != "" && updates.length != bugToEdit.length) {
-      appendUpdate('Actualización añadida', 5)
-      updBug.updates = updates
+    if(update !== "" && updates.length !== bugToEdit.length) {
+      appendUpdate(update, 5)
+      setUpdate('')
       somethingUpdated = true
     }
 
     if(somethingUpdated) {
-      console.log('Old bug')
-      console.log(bugToEdit)
-      onClose(updBug);
+      //console.log('Old bug')
+      //console.log(bugToEdit)
+      //onClose(updBug);
     } else {
       onClose()
     }
@@ -240,28 +251,36 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
             <Typography variant="h6">Historial de cambios</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Stack direction="column-reverse">
-              {
-                updates && updates.map((upd, index) => {
-                  let date = new Date(upd.timeStamp)
-                  if(upd.timeStamp > lastUpdDate) {
-                    lastUpdDate = upd.timeStamp
-                    return [
-                      <Typography variant="caption" key={index+1000}>&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>,
-                      <Stack direction="row" key={index}>
+            <Box
+              sx={{
+                maxHeight: '150px',
+                overflowY: 'auto'
+              }}
+            >
+              <Stack direction="column-reverse">
+                {
+                  updates && updates.map((upd, index) => {
+                    let date = new Date(upd.timeStamp)
+                    if(upd.timeStamp > lastUpdDate) {
+                      lastUpdDate = upd.timeStamp
+                      return [
+                        <Typography variant="caption" key={index+1000}>&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>,
+                        <Stack direction="row" key={index}>
+                          <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
+                          <Typography variant="caption">&nbsp;{upd.text}</Typography>
+                        </Stack>
+                      ]
+                    } else {
+                      return <Stack direction="row" key={index}>
                         <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
                         <Typography variant="caption">&nbsp;{upd.text}</Typography>
                       </Stack>
-                    ]
-                  } else {
-                    return <Stack direction="row" key={index}>
-                      <Typography variant="caption" sx={{opacity: '0.5'}}>&nbsp;&nbsp;&nbsp;&nbsp;{`- ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`}</Typography>
-                      <Typography variant="caption">&nbsp;{upd.text}</Typography>
-                    </Stack>
-                  }
-                })
-              }
-            </Stack>
+                    }
+                  })
+                }
+              </Stack>
+            </Box>
+            
           </Grid>
         </Grid>
       </DialogContent>
