@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { 
   useTheme,
@@ -41,7 +41,8 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
   }, [bugToEdit]);
 
   useEffect(() => {
-    if (bugToEdit.updates && updates.length !== bugToEdit.updates.length) {
+    //console.log(bugToEdit, updates)
+    if (bugToEdit.updates && updates && updates.length !== bugToEdit.updates.length) {
       let updBug = {...bugToEdit};
       updBug.severity = severity
       updBug.description = description
@@ -51,12 +52,11 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
       updBug.updates = updates
       onClose(updBug);
     }
-  }, updates)
+  }, [updates])
 
   const appendUpdate = (text, type) => {
     
     let curUpdates = [...updates];
-    //console.log(curUpdates)
     curUpdates.push({
       id: uuid(),
       text: text,
@@ -64,12 +64,12 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
       type: type
     })
     setUpdates(curUpdates)
-    //console.log(curUpdates)
   }
 
   const handleClose = () => {
     onClose();
   }
+
   const handleUpdate = () => {
     /**
      * types
@@ -108,18 +108,11 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
       somethingUpdated = true
     }
 
-    if(somethingUpdated) {
-      //console.log('Old bug')
-      //console.log(bugToEdit)
-      //onClose(updBug);
-    } else {
+    if(!somethingUpdated)
       onClose()
-    }
-
-    
   }
 
-  let lastUpdDate = 0;
+  let lastUpdDateRef = useRef(0);
 
   return (
     <Dialog onClose={handleClose} open={open} scroll="paper" fullWidth>
@@ -261,8 +254,8 @@ function UpdateBugDialog({open, onClose, bugToEdit}) {
                 {
                   updates && updates.map((upd, index) => {
                     let date = new Date(upd.timeStamp)
-                    if(upd.timeStamp > lastUpdDate) {
-                      lastUpdDate = upd.timeStamp
+                    if(upd.timeStamp > lastUpdDateRef.current) {
+                      lastUpdDateRef = upd.timeStamp
                       return [
                         <Typography variant="caption" key={index+1000}>&#x2022;{` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Typography>,
                         <Stack direction="row" key={index}>

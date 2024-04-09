@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   useMediaQuery,
   useTheme, 
@@ -53,19 +53,17 @@ function Bugtrack() {
 
   // update bug on edit
   const handleUpdateBugDiagClose = (updatedBug) => {
-    if(updatedBug) {
-      //console.log('Updated bug')
-      //console.log(updatedBug)
+    if(updatedBug !== undefined && updatedBug.updates) {
       
       const updateBugInArray = (bugs) => {
         return bugs.map(bug => bug.id === updatedBug.id ? updatedBug : bug);
       };
 
-      setOpenBugs(updateBugInArray);
-      setOnProgressBugs(updateBugInArray);
-      setToBeTestedBugs(updateBugInArray);
-      setOnHoldBugs(updateBugInArray);
-      setClosedBugs(updateBugInArray);
+      setOpenBugs(updateBugInArray(openBugs));
+      setOnProgressBugs(updateBugInArray(onProgressBugs));
+      setToBeTestedBugs(updateBugInArray(toBeTestedBugs));
+      setOnHoldBugs(updateBugInArray(onHoldBugs));
+      setClosedBugs(updateBugInArray(closedBugs));
     }
     setUpdateBugDiagOpen(false);
   }
