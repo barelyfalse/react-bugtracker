@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-bugtracker/static/css/main.c615ca5b.css",
-    "main.js": "/react-bugtracker/static/js/main.d8d93a2e.js",
+    "main.js": "/react-bugtracker/static/js/main.6a2bf7f9.js",
     "static/js/787.170315bb.chunk.js": "/react-bugtracker/static/js/787.170315bb.chunk.js",
     "static/media/roboto-all-500-normal.woff": "/react-bugtracker/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/react-bugtracker/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
@@ -37,11 +37,11 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/react-bugtracker/static/media/roboto-greek-ext-700-normal.9674bc0ae12c2551d9d1.woff2",
     "index.html": "/react-bugtracker/index.html",
     "main.c615ca5b.css.map": "/react-bugtracker/static/css/main.c615ca5b.css.map",
-    "main.d8d93a2e.js.map": "/react-bugtracker/static/js/main.d8d93a2e.js.map",
+    "main.6a2bf7f9.js.map": "/react-bugtracker/static/js/main.6a2bf7f9.js.map",
     "787.170315bb.chunk.js.map": "/react-bugtracker/static/js/787.170315bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c615ca5b.css",
-    "static/js/main.d8d93a2e.js"
+    "static/js/main.6a2bf7f9.js"
   ]
 }
