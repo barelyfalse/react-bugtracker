@@ -54,9 +54,10 @@ function Bugtrack() {
   // update bug on edit
   const handleUpdateBugDiagClose = (updatedBug) => {
     if(updatedBug !== undefined && updatedBug.updates) {
-      
       const updateBugInArray = (bugs) => {
-        return bugs.map(bug => bug.id === updatedBug.id ? updatedBug : bug);
+        if (bugs == undefined) return []
+        const updatedBugs = bugs.map(bug => bug.id === updatedBug.id ? updatedBug : bug)
+        return updatedBugs?updatedBugs:bugs;
       };
 
       setOpenBugs(updateBugInArray(openBugs));
@@ -66,6 +67,7 @@ function Bugtrack() {
       setClosedBugs(updateBugInArray(closedBugs));
     }
     setUpdateBugDiagOpen(false);
+    console.log('--');
   }
 
   //move bug 
