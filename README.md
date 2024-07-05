@@ -1,7 +1,7 @@
 # Bugtrack docs
 Bug Tracker is a React-based bug tracking application designed for use in web browsers, stores data locally. Future plans include implementing cloud-based storage to improve scalability and accessibility.
 
-[[Deploy](https://barelyfalse.github.io/react-bugtracker/)]
+[Deployment](https://barelyfalse.github.io/react-bugtracker/)
 
 ## Features
 - Intuitive and user-friendly interface
