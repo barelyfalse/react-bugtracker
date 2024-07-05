@@ -67,7 +67,6 @@ function Bugtrack() {
       setClosedBugs(updateBugInArray(closedBugs));
     }
     setUpdateBugDiagOpen(false);
-    console.log('--');
   }
 
   //move bug 
